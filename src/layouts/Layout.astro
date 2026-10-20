@@ -63,6 +63,8 @@ const year = new Date().getFullYear();
 					<Logo class="h-14 w-14 shadow-md shadow-brand-900/10 md:h-20 md:w-20" />
 				</a>
 
+				<SearchBox id="search-desktop" class="mx-auto hidden w-full max-w-md md:block" />
+
 				<nav class="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">
 					{
 						NAV.map(item => (
@@ -80,20 +82,6 @@ const year = new Date().getFullYear();
 					}
 				</nav>
 
-				<button
-					type="button"
-					class="ml-auto flex h-11 w-11 items-center justify-center rounded-full text-stone-700 transition hover:bg-brand-50 hover:text-brand-700 lg:ml-0"
-					aria-label="Search products"
-					aria-expanded="false"
-					aria-controls="header-search"
-					data-search-toggle
-				>
-					<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-						<circle cx="11" cy="11" r="7"></circle>
-						<path d="m20 20-3.5-3.5"></path>
-					</svg>
-				</button>
-
 				<a
 					href={waLink(`Hello ${SITE.name}, I would like to place an order.`)}
 					target="_blank"
@@ -105,7 +93,7 @@ const year = new Date().getFullYear();
 
 				<button
 					type="button"
-					class="flex h-11 w-11 items-center justify-center rounded-full text-stone-700 hover:bg-brand-50 lg:hidden"
+					class="ml-auto flex h-11 w-11 items-center justify-center rounded-full text-stone-700 hover:bg-brand-50 lg:hidden"
 					aria-label="Open menu"
 					aria-expanded="false"
 					aria-controls="mobile-menu"
@@ -118,10 +106,8 @@ const year = new Date().getFullYear();
 				</button>
 			</div>
 
-			<div id="header-search" class="hidden border-t border-stone-200 bg-white">
-				<div class="container-page py-3">
-					<SearchBox id="search-header" class="mx-auto max-w-2xl" />
-				</div>
+			<div class="container-page pb-3 md:hidden">
+				<SearchBox id="search-mobile" />
 			</div>
 
 			<nav id="mobile-menu" class="hidden border-t border-stone-200 bg-white lg:hidden" aria-label="Mobile">
@@ -233,14 +219,6 @@ const year = new Date().getFullYear();
 				toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 				toggle.querySelector('[data-icon-open]')?.classList.toggle('hidden', open);
 				toggle.querySelector('[data-icon-close]')?.classList.toggle('hidden', !open);
-			});
-
-			const searchToggle = document.querySelector<HTMLButtonElement>('[data-search-toggle]');
-			const searchPanel = document.getElementById('header-search');
-			searchToggle?.addEventListener('click', () => {
-				const open = searchPanel?.classList.toggle('hidden') === false;
-				searchToggle.setAttribute('aria-expanded', String(open));
-				if (open) searchPanel?.querySelector('input')?.focus();
 			});
 		</script>
 	</body>
