@@ -1,0 +1,103 @@
+---
+type Props = { id: string; class?: string };
+const { class: className = '', id } = Astro.props;
+---
+
+<form action="/search" method="get" role="search" class={`relative ${className}`} data-search-box>
+	<label for={id} class="sr-only">Search products</label>
+	<svg class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+		<circle cx="11" cy="11" r="7"></circle>
+		<path d="m20 20-3.5-3.5"></path>
+	</svg>
+	<input
+		id={id}
+		name="q"
+		type="search"
+		autocomplete="off"
+		placeholder="Search mango, bread, juice…"
+		class="w-full rounded-full border border-stone-200 bg-stone-50 py-2.5 pl-10 pr-4 text-sm outline-none transition focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-100"
+		role="combobox"
+		aria-expanded="false"
+		aria-controls={`${id}-results`}
+		aria-autocomplete="list"
+	/>
+	<div
+		id={`${id}-results`}
+		role="listbox"
+		class="absolute left-0 right-0 top-full z-50 mt-2 hidden overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-xl"
+		data-search-results
+	>
+	</div>
+</form>
+
+<script>
+	import { escapeHtml, searchProducts, thumbHtml } from '../scripts/search';
+
+	document.querySelectorAll<HTMLFormElement>('[data-search-box]').forEach(form => {
+		const input = form.querySelector('input')!;
+		const panel = form.querySelector<HTMLElement>('[data-search-results]')!;
+		let active = -1;
+
+		const close = () => {
+			panel.classList.add('hidden');
+			input.setAttribute('aria-expanded', 'false');
+			active = -1;
+		};
+
+		const options = () => Array.from(panel.querySelectorAll<HTMLAnchorElement>('[role="option"]'));
+
+		const highlight = (index: number) => {
+			const items = options();
+			items.forEach((el, i) => el.setAttribute('aria-selected', String(i === index)));
+			active = index;
+		};
+
+		input.addEventListener('input', async () => {
+			const query = input.value;
+			if (!query.trim()) return close();
+			const results = await searchProducts(query, 6);
+			if (input.value !== query) return; // a newer keystroke already ran
+
+			panel.innerHTML = results.length
+				? results
+						.map(
+							item => `
+							<a href="${escapeHtml(item.url)}" role="option" aria-selected="false"
+								class="flex items-center gap-3 px-4 py-2.5 hover:bg-brand-50 aria-selected:bg-brand-50">
+								${thumbHtml(item, 'h-11 w-11 shrink-0')}
+								<span class="min-w-0 flex-1">
+									<span class="block truncate text-sm font-medium text-stone-900">${escapeHtml(item.name)}</span>
+									<span class="block text-xs text-stone-500">${escapeHtml(item.category)} · ${escapeHtml(item.price)}</span>
+								</span>
+							</a>`,
+						)
+						.join('') +
+					`<a href="/search?q=${encodeURIComponent(query)}" class="block border-t border-stone-100 px-4 py-2.5 text-center text-sm font-medium text-brand-700 hover:bg-brand-50">See all results ↵</a>`
+				: `<p class="px-4 py-5 text-center text-sm text-stone-500">No products found for “${escapeHtml(query)}”</p>`;
+
+			panel.classList.remove('hidden');
+			input.setAttribute('aria-expanded', 'true');
+			highlight(results.length ? 0 : -1);
+		});
+
+		input.addEventListener('keydown', event => {
+			const items = options();
+			if (event.key === 'ArrowDown' && items.length) {
+				event.preventDefault();
+				highlight((active + 1) % items.length);
+			} else if (event.key === 'ArrowUp' && items.length) {
+				event.preventDefault();
+				highlight((active - 1 + items.length) % items.length);
+			} else if (event.key === 'Enter' && active >= 0 && items[active]) {
+				event.preventDefault();
+				window.location.href = items[active].href;
+			} else if (event.key === 'Escape') {
+				close();
+			}
+		});
+
+		document.addEventListener('click', event => {
+			if (!form.contains(event.target as Node)) close();
+		});
+	});
+</script>

@@ -1,0 +1,108 @@
+---
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import Layout from '../layouts/Layout.astro';
+import { SITE, waLink } from '../lib/site';
+
+const channels = [
+	{ href: waLink(`Hello ${SITE.name}!`), icon: '💬', label: 'WhatsApp', value: SITE.phone, external: true },
+	{ href: `tel:${SITE.phoneIntl}`, icon: '📞', label: 'Call us', value: SITE.phone, external: false },
+	{ href: `mailto:${SITE.email}`, icon: '✉️', label: 'Email', value: SITE.email, external: false },
+];
+---
+
+<Layout title="Contact Us" description={`Contact ${SITE.name} on WhatsApp, phone or email.`}>
+	<section class="border-b border-stone-200 bg-brand-50">
+		<div class="container-page py-12">
+			<h1 class="text-4xl font-extrabold text-stone-900">Contact Us</h1>
+			<p class="mt-2 text-stone-600">Questions, bulk orders or feedback — we usually reply within a few minutes.</p>
+		</div>
+	</section>
+
+	<section class="container-page grid gap-10 py-12 lg:grid-cols-5">
+		<div class="space-y-4 lg:col-span-2">
+			{
+				channels.map(c => (
+					<a
+						href={c.href}
+						target={c.external ? '_blank' : undefined}
+						rel={c.external ? 'noopener' : undefined}
+						class="flex items-center gap-4 rounded-2xl border border-stone-200 p-5 transition hover:border-brand-500 hover:shadow-md"
+					>
+						<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-2xl" aria-hidden="true">
+							{c.icon}
+						</span>
+						<span class="min-w-0">
+							<span class="block text-sm text-stone-500">{c.label}</span>
+							<span class="block break-all font-semibold text-stone-900">{c.value}</span>
+						</span>
+					</a>
+				))
+			}
+			<div class="rounded-2xl border border-stone-200 p-5 text-sm text-stone-600">
+				<p><strong class="text-stone-900">📍 Address:</strong> {SITE.address}</p>
+				<p class="mt-2"><strong class="text-stone-900">🕗 Hours:</strong> {SITE.hours}</p>
+			</div>
+		</div>
+
+		<div class="rounded-3xl border border-stone-200 p-6 sm:p-8 lg:col-span-3">
+			<h2 class="text-xl font-bold text-stone-900">Send us a message</h2>
+			<p class="mt-1 text-sm text-stone-500">Your message opens in WhatsApp, ready to send. Nothing is stored on this website.</p>
+
+			<form class="mt-6 space-y-4" data-contact-form data-whatsapp={SITE.whatsapp} data-shop={SITE.name}>
+				<div class="grid gap-4 sm:grid-cols-2">
+					<label class="block text-sm font-medium text-stone-700">
+						Your name
+						<input name="name" required autocomplete="name" class="field" />
+					</label>
+					<label class="block text-sm font-medium text-stone-700">
+						Phone (optional)
+						<input name="phone" type="tel" autocomplete="tel" pattern="01[3-9][0-9]{8}" placeholder="01XXXXXXXXX" class="field" />
+					</label>
+				</div>
+				<label class="block text-sm font-medium text-stone-700">
+					Subject
+					<select name="subject" class="field">
+						<option>General question</option>
+						<option>Place an order</option>
+						<option>Bulk / corporate order</option>
+						<option>Feedback</option>
+					</select>
+				</label>
+				<label class="block text-sm font-medium text-stone-700">
+					Message
+					<textarea name="message" required rows="5" class="field"></textarea>
+				</label>
+				<button type="submit" class="btn-whatsapp w-full py-3.5 text-base sm:w-auto">
+					<WhatsAppIcon /> Send on WhatsApp
+				</button>
+			</form>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	@reference "../styles/global.css";
+
+	.field {
+		@apply mt-1.5 w-full rounded-xl border border-stone-300 bg-white px-4 py-2.5 text-stone-900 outline-none transition focus:border-brand-500 focus:ring-2 focus:ring-brand-100;
+	}
+</style>
+
+<script>
+	const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+
+	form.addEventListener('submit', event => {
+		event.preventDefault();
+		const data = new FormData(form);
+		const phone = String(data.get('phone') ?? '').trim();
+		const lines = [
+			`Hello ${form.dataset.shop},`,
+			`Subject: ${data.get('subject')}`,
+			`Name: ${data.get('name')}`,
+			...(phone ? [`Phone: ${phone}`] : []),
+			'',
+			String(data.get('message')),
+		];
+		window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`, '_blank', 'noopener');
+	});
+</script>

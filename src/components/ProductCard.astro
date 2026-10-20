@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { getCategory, getStartingPrice, priceLabel } from '../lib/site';
+
+type Props = { product: CollectionEntry<'products'> };
+
+const { product } = Astro.props;
+const { data } = product;
+const category = getCategory(data.category);
+---
+
+<a
+	href={`/products/${product.id}`}
+	class="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg"
+	data-product-card
+	data-category={data.category}
+	data-name={data.name}
+	data-price={getStartingPrice(data.sizes) ?? ''}
+>
+	<div class={`relative flex aspect-square items-center justify-center ${category.bg}`}>
+		{
+			data.image ? (
+				<img src={data.image} alt={data.name} loading="lazy" class="h-full w-full object-cover" />
+			) : (
+				<span class="text-7xl transition group-hover:scale-110" aria-hidden="true">
+					{data.emoji}
+				</span>
+			)
+		}
+		{!data.inStock && <span class="absolute left-3 top-3 rounded-full bg-stone-800 px-2.5 py-1 text-xs font-medium text-white">Out of stock</span>}
+	</div>
+	<div class="flex flex-1 flex-col gap-1 p-4">
+		<span class="text-xs font-medium uppercase tracking-wide text-brand-700">{category.name}</span>
+		<h3 class="font-semibold text-stone-900 group-hover:text-brand-700">{data.name}</h3>
+		<p class="line-clamp-2 text-sm text-stone-500">{data.summary}</p>
+		<p class="mt-auto pt-2 font-bold text-stone-900">{priceLabel(data.sizes)}</p>
+	</div>
+</a>

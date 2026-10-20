@@ -1,0 +1,179 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+import ProductCard from '../../components/ProductCard.astro';
+import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
+import Layout from '../../layouts/Layout.astro';
+import { formatPrice, getCategory, getStartingPrice, SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+	const products = await getCollection('products');
+	return products.map(product => ({ params: { id: product.id }, props: { product, products } }));
+}
+
+type Props = { product: CollectionEntry<'products'>; products: CollectionEntry<'products'>[] };
+
+const { product, products } = Astro.props;
+const { data } = product;
+const { Content } = await render(product);
+const category = getCategory(data.category);
+const related = products.filter(p => p.data.category === data.category && p.id !== product.id).slice(0, 4);
+const startingPrice = getStartingPrice(data.sizes);
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Product',
+	category: category.name,
+	description: data.summary,
+	name: data.name,
+	...(startingPrice !== undefined && {
+		offers: {
+			'@type': 'Offer',
+			availability: data.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+			price: startingPrice,
+			priceCurrency: 'BDT',
+		},
+	}),
+};
+---
+
+<Layout title={data.name} description={data.summary} jsonLd={jsonLd}>
+	<section class="container-page py-8">
+		<nav class="text-sm text-stone-500" aria-label="Breadcrumb">
+			<a href="/" class="hover:text-brand-700">Home</a> /
+			<a href="/products" class="hover:text-brand-700">Products</a> /
+			<a href={`/products?category=${category.slug}`} class="hover:text-brand-700">{category.name}</a> /
+			<span class="text-stone-700">{data.name}</span>
+		</nav>
+
+		<div class="mt-6 grid gap-10 md:grid-cols-2">
+			<div class={`flex aspect-square items-center justify-center overflow-hidden rounded-3xl ${category.bg}`}>
+				{
+					data.image ? (
+						<img src={data.image} alt={data.name} class="h-full w-full object-cover" />
+					) : (
+						<span class="text-[9rem]" aria-hidden="true">
+							{data.emoji}
+						</span>
+					)
+				}
+			</div>
+
+			<div
+				data-order
+				data-name={data.name}
+				data-currency={SITE.currency}
+				data-whatsapp={SITE.whatsapp}
+				data-shop={SITE.name}
+				data-in-stock={String(data.inStock)}
+			>
+				<a href={`/products?category=${category.slug}`} class="text-sm font-semibold uppercase tracking-wide text-brand-700">{category.name}</a>
+				<h1 class="mt-2 text-3xl font-extrabold text-stone-900 sm:text-4xl">{data.name}</h1>
+				<p class="mt-3 text-lg text-stone-600">{data.summary}</p>
+
+				<p class="mt-6 text-3xl font-bold text-stone-900" data-price-display aria-live="polite">
+					{data.sizes[0].price !== undefined ? formatPrice(data.sizes[0].price) : 'Ask for Price'}
+				</p>
+				<p class:list={['mt-1 text-sm font-medium', data.inStock ? 'text-brand-700' : 'text-red-600']}>
+					{data.inStock ? '● In stock' : '● Out of stock — ask us when it is back'}
+				</p>
+
+				<fieldset class="mt-6">
+					<legend class="text-sm font-semibold text-stone-900">Size</legend>
+					<div class="mt-2 flex flex-wrap gap-2">
+						{
+							data.sizes.map((size, i) => (
+								<label class="cursor-pointer">
+									<input type="radio" name="size" value={size.label} data-price={size.price ?? ''} checked={i === 0} class="peer sr-only" />
+									<span class="block rounded-full border border-stone-300 px-4 py-2 text-sm font-medium text-stone-700 transition peer-checked:border-brand-600 peer-checked:bg-brand-50 peer-checked:text-brand-700 peer-focus-visible:ring-2 peer-focus-visible:ring-brand-500">
+										{size.label}
+									</span>
+								</label>
+							))
+						}
+					</div>
+				</fieldset>
+
+				<div class="mt-6">
+					<span class="text-sm font-semibold text-stone-900" id="qty-label">Quantity</span>
+					<div class="mt-2 inline-flex items-center rounded-full border border-stone-300" role="group" aria-labelledby="qty-label">
+						<button type="button" class="h-11 w-11 rounded-l-full text-xl hover:bg-stone-100" data-qty="-1" aria-label="Decrease quantity">−</button>
+						<input type="number" min="1" max="99" value="1" class="w-12 border-x border-stone-300 bg-transparent py-2 text-center outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none" data-qty-input aria-labelledby="qty-label" />
+						<button type="button" class="h-11 w-11 rounded-r-full text-xl hover:bg-stone-100" data-qty="1" aria-label="Increase quantity">+</button>
+					</div>
+				</div>
+
+				<div class="mt-8 flex flex-col gap-3 sm:flex-row">
+					<a href="#" target="_blank" rel="noopener" class="btn-whatsapp flex-1 py-3.5 text-base" data-order-link>
+						<WhatsAppIcon />
+						<span data-order-label>{data.sizes[0].price !== undefined && data.inStock ? 'Order on WhatsApp' : 'Ask on WhatsApp'}</span>
+					</a>
+					<a href={`tel:${SITE.phoneIntl}`} class="btn-outline py-3.5 text-base">📞 Call {SITE.phone}</a>
+				</div>
+				<p class="mt-3 text-xs text-stone-500">WhatsApp opens with your order details filled in — just press send. Cash on delivery available.</p>
+
+				<div class="prose-simple mt-10 border-t border-stone-200 pt-6 text-stone-700">
+					<h2 class="mb-3 text-lg font-semibold text-stone-900">Details</h2>
+					<Content />
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{
+		related.length > 0 && (
+			<section class="container-page py-10">
+				<h2 class="text-2xl font-bold text-stone-900">You may also like</h2>
+				<div class="mt-6 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+					{related.map(p => <ProductCard product={p} />)}
+				</div>
+			</section>
+		)
+	}
+</Layout>
+
+<script>
+	const root = document.querySelector<HTMLElement>('[data-order]')!;
+	const { currency = '৳', name = '', shop = '', whatsapp = '' } = root.dataset;
+	const inStock = root.dataset.inStock === 'true';
+	const priceDisplay = root.querySelector<HTMLElement>('[data-price-display]')!;
+	const qtyInput = root.querySelector<HTMLInputElement>('[data-qty-input]')!;
+	const link = root.querySelector<HTMLAnchorElement>('[data-order-link]')!;
+	const label = root.querySelector<HTMLElement>('[data-order-label]')!;
+
+	const format = (n: number) => `${currency}${n.toLocaleString('en-US')}`;
+
+	function update() {
+		const size = root.querySelector<HTMLInputElement>('input[name="size"]:checked')!;
+		const qty = Math.min(99, Math.max(1, Number(qtyInput.value) || 1));
+		qtyInput.value = String(qty);
+		const unit = size.dataset.price ? Number(size.dataset.price) : undefined;
+
+		priceDisplay.textContent = unit === undefined ? 'Ask for Price' : qty > 1 ? `${format(unit * qty)} (${qty} × ${format(unit)})` : format(unit);
+
+		const canOrder = unit !== undefined && inStock;
+		label.textContent = canOrder ? 'Order on WhatsApp' : 'Ask on WhatsApp';
+
+		const lines = [
+			canOrder ? `Hello ${shop}, I would like to order:` : `Hello ${shop}, I would like to ask about this product:`,
+			`Product: ${name}`,
+			`Size: ${size.value}`,
+			`Quantity: ${qty}`,
+			unit !== undefined ? `Price: ${format(unit * qty)}` : 'Price: please let me know',
+			`Page: ${window.location.href}`,
+		];
+		link.href = `https://wa.me/${whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`;
+	}
+
+	root.querySelectorAll<HTMLButtonElement>('[data-qty]').forEach(btn =>
+		btn.addEventListener('click', () => {
+			qtyInput.value = String((Number(qtyInput.value) || 1) + Number(btn.dataset.qty));
+			update();
+		}),
+	);
+	qtyInput.addEventListener('change', update);
+	root.querySelectorAll('input[name="size"]').forEach(input => input.addEventListener('change', update));
+
+	update();
+</script>

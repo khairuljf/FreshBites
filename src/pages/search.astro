@@ -1,0 +1,73 @@
+---
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import Layout from '../layouts/Layout.astro';
+import { SITE, waLink } from '../lib/site';
+---
+
+<Layout title="Search" description={`Search products at ${SITE.name}.`}>
+	<section class="border-b border-stone-200 bg-brand-50">
+		<div class="container-page py-10">
+			<h1 class="text-3xl font-extrabold text-stone-900" data-search-title>Search</h1>
+			<p class="mt-1 text-stone-500" data-search-summary>Type in the search box above to find products.</p>
+		</div>
+	</section>
+
+	<section class="container-page py-8">
+		<div class="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4" data-search-grid></div>
+
+		<div class="hidden flex-col items-center gap-4 py-16 text-center" data-search-empty>
+			<span class="text-6xl" aria-hidden="true">🔍</span>
+			<p class="text-lg font-semibold text-stone-900">We couldn't find that on the website</p>
+			<p class="max-w-md text-stone-500">We may still have it — ask us on WhatsApp and we'll check for you.</p>
+			<a href={waLink(`Hello ${SITE.name}, do you have this product?`)} target="_blank" rel="noopener" class="btn-whatsapp" data-search-ask>
+				<WhatsAppIcon /> Ask on WhatsApp
+			</a>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	import { SITE, waLink } from '../lib/site';
+	import { escapeHtml, searchProducts } from '../scripts/search';
+
+	const query = new URLSearchParams(window.location.search).get('q')?.trim() ?? '';
+	const title = document.querySelector<HTMLElement>('[data-search-title]')!;
+	const summary = document.querySelector<HTMLElement>('[data-search-summary]')!;
+	const grid = document.querySelector<HTMLElement>('[data-search-grid]')!;
+	const empty = document.querySelector<HTMLElement>('[data-search-empty]')!;
+	const ask = document.querySelector<HTMLAnchorElement>('[data-search-ask]')!;
+
+	document.querySelectorAll<HTMLInputElement>('input[name="q"]').forEach(input => (input.value = query));
+
+	async function showResults() {
+		document.title = `Search: ${query} | ${SITE.name}`;
+		title.textContent = `Results for “${query}”`;
+
+		const results = await searchProducts(query);
+		summary.textContent = `${results.length} product${results.length === 1 ? '' : 's'} found`;
+
+		grid.innerHTML = results
+			.map(
+				item => `
+				<a href="${escapeHtml(item.url)}" class="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg">
+					<div class="flex aspect-square items-center justify-center bg-brand-50 text-7xl">
+						${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" class="h-full w-full object-cover" />` : `<span aria-hidden="true">${escapeHtml(item.emoji)}</span>`}
+					</div>
+					<div class="flex flex-1 flex-col gap-1 p-4">
+						<span class="text-xs font-medium uppercase tracking-wide text-brand-700">${escapeHtml(item.category)}</span>
+						<h3 class="font-semibold text-stone-900 group-hover:text-brand-700">${escapeHtml(item.name)}</h3>
+						<p class="line-clamp-2 text-sm text-stone-500">${escapeHtml(item.summary)}</p>
+						<p class="mt-auto pt-2 font-bold text-stone-900">${escapeHtml(item.price)}</p>
+					</div>
+				</a>`,
+			)
+			.join('');
+
+		if (!results.length) {
+			empty.classList.replace('hidden', 'flex');
+			ask.href = waLink(`Hello ${SITE.name}, do you have "${query}"?`);
+		}
+	}
+
+	if (query) showResults();
+</script>

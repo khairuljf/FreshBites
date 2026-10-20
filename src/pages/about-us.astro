@@ -1,0 +1,80 @@
+---
+import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import Layout from '../layouts/Layout.astro';
+import { SITE, waLink } from '../lib/site';
+
+const stats = [
+	{ label: 'Happy customers', value: '5,000+' },
+	{ label: 'Fresh products', value: '200+' },
+	{ label: 'Partner farms', value: '30+' },
+	{ label: 'Avg. delivery time', value: '3 hrs' },
+];
+
+const values = [
+	{ icon: '🌱', title: 'Freshness first', text: 'We buy in small batches every morning so nothing sits on a shelf for days.' },
+	{ icon: '🤝', title: 'Fair to farmers', text: 'We work directly with local growers and pay them fairly for quality produce.' },
+	{ icon: '✅', title: 'Checked by hand', text: 'Every order is inspected and packed by our team before it leaves.' },
+	{ icon: '♻️', title: 'Less waste', text: 'Reusable crates and paper packaging wherever we can.' },
+];
+---
+
+<Layout title="About Us" description={`Learn about ${SITE.name} — fresh, local food delivered across Bangladesh.`}>
+	<section class="bg-gradient-to-br from-brand-50 to-orange-50">
+		<div class="container-page py-16 text-center md:py-20">
+			<h1 class="text-4xl font-extrabold text-stone-900 sm:text-5xl">About {SITE.name}</h1>
+			<p class="mx-auto mt-5 max-w-2xl text-lg text-stone-600">
+				We started {SITE.name} with a simple idea: everyone deserves fresh, honest food — without the market rush.
+			</p>
+		</div>
+	</section>
+
+	<section class="container-page grid items-center gap-12 py-16 md:grid-cols-2">
+		<div class="prose-simple text-stone-700">
+			<h2 class="mb-4 text-2xl font-bold text-stone-900">Our story</h2>
+			<p>
+				{SITE.name} began as a small home delivery service for neighbours in Dhaka. Today we partner with farms, bakeries and small producers across
+				Bangladesh to bring their best products straight to your door.
+			</p>
+			<p>
+				We keep things simple: browse the website, tap a button to message us on WhatsApp, and we'll confirm your order in minutes. Pay in cash when it
+				arrives.
+			</p>
+		</div>
+		<div class="grid grid-cols-2 gap-4">
+			{
+				stats.map(s => (
+					<div class="rounded-2xl bg-brand-50 p-6 text-center">
+						<p class="text-3xl font-extrabold text-brand-700">{s.value}</p>
+						<p class="mt-1 text-sm text-stone-600">{s.label}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="container-page py-8">
+		<h2 class="text-center text-2xl font-bold text-stone-900">What we stand for</h2>
+		<div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+			{
+				values.map(v => (
+					<div class="rounded-2xl border border-stone-200 p-6">
+						<span class="text-3xl" aria-hidden="true">{v.icon}</span>
+						<h3 class="mt-3 font-semibold text-stone-900">{v.title}</h3>
+						<p class="mt-1 text-sm text-stone-500">{v.text}</p>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="container-page pt-12">
+		<div class="flex flex-col items-center gap-4 rounded-3xl bg-brand-600 px-6 py-12 text-center text-white">
+			<h2 class="text-2xl font-bold">Have a question?</h2>
+			<p class="text-brand-50">We're happy to help — {SITE.hours.toLowerCase()}.</p>
+			<div class="flex flex-wrap justify-center gap-3">
+				<a href={waLink(`Hello ${SITE.name}!`)} target="_blank" rel="noopener" class="btn bg-white text-brand-700 hover:bg-brand-50"><WhatsAppIcon /> WhatsApp us</a>
+				<a href="/contact-us" class="btn border border-white/60 text-white hover:bg-white/10">Contact page</a>
+			</div>
+		</div>
+	</section>
+</Layout>

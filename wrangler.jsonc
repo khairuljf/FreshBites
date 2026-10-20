@@ -1,0 +1,10 @@
+// Cloudflare Workers config — static assets only (free, no server code).
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "freshbites",
+	"compatibility_date": "2026-10-01",
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "404-page"
+	}
+}
