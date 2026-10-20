@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 
+import FacebookIcon from '../components/FacebookIcon.astro';
+import Logo from '../components/Logo.astro';
 import ProductCard from '../components/ProductCard.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Layout from '../layouts/Layout.astro';
@@ -11,35 +13,85 @@ const featured = products.filter(p => p.data.featured).slice(0, 8);
 const countByCategory = (slug: string) => products.filter(p => p.data.category === slug).length;
 
 const perks = [
-	{ icon: '🌱', title: 'Fresh every day', text: 'Sourced daily from trusted farms and bakeries.' },
-	{ icon: '🚚', title: 'Fast delivery', text: 'Same-day delivery inside Dhaka for orders before 4 PM.' },
-	{ icon: '💬', title: 'Easy WhatsApp ordering', text: 'Tap a button, send the message — we confirm in minutes.' },
-	{ icon: '💵', title: 'Cash on delivery', text: 'Pay when your order arrives. No card needed.' },
+	{ icon: '🌿', title: 'Pure & natural', text: 'Healthy food and everyday essentials you can trust — no shortcuts.', tint: 'bg-brand-50' },
+	{ icon: '🍳', title: 'Fresh, made to order', text: `Cakes and home-made items are prepared after you order — please order ${SITE.leadTime} ahead.`, tint: 'bg-accent-50' },
+	{ icon: '💬', title: 'Easy WhatsApp ordering', text: 'Tap a button, send the message — we confirm in minutes.', tint: 'bg-leaf-100' },
+	{ icon: '💵', title: 'Cash on delivery', text: 'We deliver all over Bangladesh. Pay when your order arrives — no card needed.', tint: 'bg-earth-50' },
+];
+
+const steps = [
+	{ title: 'Pick your items', text: 'Browse the catalogue and choose size and quantity.' },
+	{ title: 'Send on WhatsApp', text: 'Your order is pre-filled — just press send.' },
+	{ title: 'We prepare & deliver', text: 'We pack your order — cooking fresh where needed — and confirm the delivery time. Pay on arrival.' },
+];
+
+// Emoji that orbit the logo in the hero.
+const orbit = [
+	{ e: '🥭', pos: 'left-0 top-8' },
+	{ e: '🥐', pos: 'right-2 top-0' },
+	{ e: '🥦', pos: '-left-4 bottom-16' },
+	{ e: '🍊', pos: 'right-0 bottom-10' },
+	{ e: '🧃', pos: 'left-1/2 -bottom-4 -translate-x-1/2' },
 ];
 ---
 
-<Layout jsonLd={{ '@context': 'https://schema.org', '@type': 'Store', name: SITE.name, telephone: SITE.phoneIntl, email: SITE.email }}>
-	<section class="bg-gradient-to-br from-brand-50 via-white to-orange-50">
-		<div class="container-page grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
+<Layout jsonLd={{ '@context': 'https://schema.org', '@type': 'Store', name: SITE.name, telephone: SITE.phoneIntl, email: SITE.email, logo: SITE.logo, sameAs: [SITE.facebook] }}>
+	<section class="relative overflow-hidden bg-gradient-to-br from-brand-50 via-cream to-accent-50">
+		<div class="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full border-[14px] border-earth-500/10" aria-hidden="true"></div>
+		<div class="pointer-events-none absolute -bottom-40 -left-40 h-[28rem] w-[28rem] rounded-full border-[14px] border-brand-700/10" aria-hidden="true"></div>
+
+		<div class="container-page relative grid items-center gap-12 py-14 md:grid-cols-2 md:py-20">
 			<div>
-				<span class="inline-block rounded-full bg-brand-100 px-3 py-1 text-xs font-semibold text-brand-700">🍃 Farm fresh · Delivered daily</span>
-				<h1 class="mt-5 text-4xl font-extrabold leading-tight tracking-tight text-stone-900 sm:text-5xl">
-					Fresh food,<br /><span class="text-brand-600">delivered to your door.</span>
+				<p class="eyebrow flex flex-wrap items-center gap-x-2">
+					{
+						SITE.slogan.map((word, i) => (
+							<>
+								{i > 0 && <span class="h-1.5 w-1.5 rounded-full bg-brand-700" aria-hidden="true" />}
+								<span>{word}</span>
+							</>
+						))
+					}
+				</p>
+				<h1 class="mt-5 text-4xl font-bold leading-[1.1] text-brand-900 sm:text-5xl lg:text-6xl">
+					Fresh food,<br />
+					<span class="relative inline-block text-leaf-600">
+						delivered
+						<svg class="absolute -bottom-2 left-0 w-full text-accent-500" viewBox="0 0 200 12" fill="none" aria-hidden="true" preserveAspectRatio="none">
+							<path d="M2 9c50-8 146-8 196-2" stroke="currentColor" stroke-width="4" stroke-linecap="round"></path>
+						</svg>
+					</span>{' '}
+					to your door.
 				</h1>
-				<p class="mt-5 max-w-md text-lg text-stone-600">
-					Fruits, vegetables, fresh bakes, snacks and drinks — order in seconds on WhatsApp and pay on delivery.
+				<p class="mt-6 max-w-md text-lg leading-relaxed text-stone-600">
+					Home-made cakes and snacks, everyday essentials like atta and oil, fruits and more — order in seconds on WhatsApp and pay on delivery.
 				</p>
 				<div class="mt-8 flex flex-wrap gap-3">
-					<a href="/products" class="btn-primary px-6 py-3 text-base">Shop now</a>
-					<a href={waLink(`Hello ${SITE.name}, I would like to place an order.`)} target="_blank" rel="noopener" class="btn-whatsapp px-6 py-3 text-base">
+					<a href="/products" class="btn-primary px-7 py-3.5 text-base">
+						Shop now
+						<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+					</a>
+					<a href={waLink(`Hello ${SITE.name}, I would like to place an order.`)} target="_blank" rel="noopener" class="btn-whatsapp px-7 py-3.5 text-base">
 						<WhatsAppIcon /> Order on WhatsApp
 					</a>
 				</div>
+				<dl class="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-brand-700/10 pt-6">
+					<div><dt class="text-xs text-stone-500">Happy customers</dt><dd class="font-display text-2xl font-bold text-brand-800">5,000+</dd></div>
+					<div><dt class="text-xs text-stone-500">Products</dt><dd class="font-display text-2xl font-bold text-brand-800">200+</dd></div>
+					<div><dt class="text-xs text-stone-500">Pure &amp; natural</dt><dd class="font-display text-2xl font-bold text-accent-600">100%</dd></div>
+				</dl>
 			</div>
-			<div class="grid grid-cols-3 gap-3 sm:gap-4" aria-hidden="true">
+
+			<div class="relative mx-auto aspect-square w-full max-w-sm sm:max-w-md" aria-hidden="true">
+				<div class="absolute inset-6 rounded-full bg-white shadow-2xl shadow-brand-900/15"></div>
+				<Logo size="lg" class="float absolute inset-6 h-[calc(100%-3rem)] w-[calc(100%-3rem)]" />
 				{
-					['🥭', '🥐', '🍓', '🥦', '🧃', '🍪', '🍌', '🥚', '🍊'].map((e, i) => (
-						<div class:list={['flex aspect-square items-center justify-center rounded-3xl bg-white text-5xl shadow-sm sm:text-6xl', i % 2 ? 'translate-y-3' : '']}>{e}</div>
+					orbit.map((o, i) => (
+						<span
+							class={`float absolute flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-3xl shadow-lg sm:h-16 sm:w-16 sm:text-4xl ${o.pos}`}
+							style={`animation-delay: -${i * 1.2}s`}
+						>
+							{o.e}
+						</span>
 					))
 				}
 			</div>
@@ -48,16 +100,24 @@ const perks = [
 
 	<section class="container-page py-16">
 		<div class="flex items-end justify-between gap-4">
-			<h2 class="text-2xl font-bold text-stone-900 sm:text-3xl">Shop by category</h2>
-			<a href="/products" class="text-sm font-semibold text-brand-700 hover:underline">View all →</a>
+			<div>
+				<p class="eyebrow">Categories</p>
+				<h2 class="mt-2 text-3xl font-bold text-brand-900">Shop by category</h2>
+			</div>
+			<a href="/products" class="text-sm font-semibold text-brand-700 hover:text-accent-600">View all →</a>
 		</div>
-		<div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+		<div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
 			{
 				CATEGORIES.map(c => (
-					<a href={`/products?category=${c.slug}`} class={`group flex flex-col items-center gap-2 rounded-2xl ${c.bg} p-6 text-center transition hover:shadow-md`}>
-						<span class="text-5xl transition group-hover:scale-110" aria-hidden="true">{c.emoji}</span>
-						<span class="font-semibold text-stone-900">{c.name}</span>
-						<span class="text-xs text-stone-500">{countByCategory(c.slug)} items</span>
+					<a
+						href={`/products?category=${c.slug}`}
+						class={`group flex flex-col items-center gap-2 rounded-3xl border border-transparent ${c.bg} p-6 text-center transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-lg`}
+					>
+						<span class="flex h-20 w-20 items-center justify-center rounded-full bg-white text-5xl shadow-sm transition group-hover:scale-110" aria-hidden="true">
+							{c.emoji}
+						</span>
+						<span class="mt-1 font-bold text-brand-900">{c.name}</span>
+						<span class="text-xs font-medium text-stone-500">{countByCategory(c.slug)} items</span>
 					</a>
 				))
 			}
@@ -66,8 +126,11 @@ const perks = [
 
 	<section class="container-page py-8">
 		<div class="flex items-end justify-between gap-4">
-			<h2 class="text-2xl font-bold text-stone-900 sm:text-3xl">Today's favourites</h2>
-			<a href="/products" class="text-sm font-semibold text-brand-700 hover:underline">All products →</a>
+			<div>
+				<p class="eyebrow">Handpicked</p>
+				<h2 class="mt-2 text-3xl font-bold text-brand-900">Today's favourites</h2>
+			</div>
+			<a href="/products" class="text-sm font-semibold text-brand-700 hover:text-accent-600">All products →</a>
 		</div>
 		<div class="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
 			{featured.map(product => <ProductCard product={product} />)}
@@ -75,26 +138,57 @@ const perks = [
 	</section>
 
 	<section class="container-page py-16">
-		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+		<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
 			{
 				perks.map(p => (
-					<div class="rounded-2xl border border-stone-200 p-6">
-						<span class="text-3xl" aria-hidden="true">{p.icon}</span>
-						<h3 class="mt-3 font-semibold text-stone-900">{p.title}</h3>
-						<p class="mt-1 text-sm text-stone-500">{p.text}</p>
+					<div class="rounded-3xl border border-stone-200 bg-white p-6 transition hover:shadow-md">
+						<span class={`flex h-12 w-12 items-center justify-center rounded-2xl text-2xl ${p.tint}`} aria-hidden="true">
+							{p.icon}
+						</span>
+						<h3 class="mt-4 font-bold text-brand-900">{p.title}</h3>
+						<p class="mt-1 text-sm leading-relaxed text-stone-500">{p.text}</p>
 					</div>
 				))
 			}
 		</div>
 	</section>
 
-	<section class="container-page">
-		<div class="flex flex-col items-center gap-5 rounded-3xl bg-brand-600 px-6 py-12 text-center text-white">
-			<h2 class="text-2xl font-bold sm:text-3xl">Can't find what you need?</h2>
-			<p class="max-w-lg text-brand-50">Message us on WhatsApp — we'll source it for you or suggest the best alternative.</p>
-			<a href={waLink(`Hello ${SITE.name}, I'm looking for a product that's not on the website.`)} target="_blank" rel="noopener" class="btn bg-white px-6 py-3 text-base text-brand-700 hover:bg-brand-50">
-				<WhatsAppIcon /> Chat with us
-			</a>
+	<section class="bg-white py-16">
+		<div class="container-page">
+			<div class="text-center">
+				<p class="eyebrow">How it works</p>
+				<h2 class="mt-2 text-3xl font-bold text-brand-900">Order in 3 easy steps</h2>
+			</div>
+			<ol class="mt-10 grid gap-6 md:grid-cols-3">
+				{
+					steps.map((s, i) => (
+						<li class="relative rounded-3xl bg-cream p-6 text-center">
+							<span class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent-500 font-display text-xl font-bold text-brand-950">{i + 1}</span>
+							<h3 class="mt-4 font-bold text-brand-900">{s.title}</h3>
+							<p class="mt-1 text-sm text-stone-500">{s.text}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<section class="container-page pt-16">
+		<div class="relative overflow-hidden rounded-[2rem] bg-brand-800 px-6 py-14 text-center text-white">
+			<div class="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-accent-500/20 blur-2xl" aria-hidden="true"></div>
+			<div class="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-leaf-500/20 blur-2xl" aria-hidden="true"></div>
+			<div class="relative flex flex-col items-center gap-5">
+				<h2 class="text-3xl font-bold sm:text-4xl">Can't find what you need?</h2>
+				<p class="max-w-lg text-brand-100">Message us on WhatsApp — we'll source it for you or suggest the best alternative.</p>
+				<div class="flex flex-wrap justify-center gap-3">
+					<a href={waLink(`Hello ${SITE.name}, I'm looking for a product that's not on the website.`)} target="_blank" rel="noopener" class="btn-accent px-6 py-3 text-base">
+						<WhatsAppIcon /> Chat with us
+					</a>
+					<a href={SITE.facebook} target="_blank" rel="noopener" class="btn border border-white/40 px-6 py-3 text-base text-white hover:bg-white/10">
+						<FacebookIcon /> Follow on Facebook
+					</a>
+				</div>
+			</div>
 		</div>
 	</section>
 </Layout>

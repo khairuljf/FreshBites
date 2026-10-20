@@ -1,0 +1,9 @@
+---
+import { SITE } from '../lib/site';
+
+type Props = { class?: string; size?: 'sm' | 'lg' };
+const { class: className = '', size = 'sm' } = Astro.props;
+const src = size === 'sm' ? '/images/logo-192.png' : SITE.logo;
+---
+
+<img src={src} alt={`${SITE.name} logo`} width="192" height="192" decoding="async" class={`rounded-full bg-white ${className}`} />

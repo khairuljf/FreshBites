@@ -12,28 +12,35 @@ const category = getCategory(data.category);
 
 <a
 	href={`/products/${product.id}`}
-	class="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg"
+	class="group flex flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-900/10"
 	data-product-card
 	data-category={data.category}
 	data-name={data.name}
 	data-price={getStartingPrice(data.sizes) ?? ''}
 >
-	<div class={`relative flex aspect-square items-center justify-center ${category.bg}`}>
+	<div class={`relative m-2 flex aspect-square items-center justify-center overflow-hidden rounded-2xl ${category.bg}`}>
 		{
 			data.image ? (
-				<img src={data.image} alt={data.name} loading="lazy" class="h-full w-full object-cover" />
+				<img src={data.image} alt={data.name} loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
 			) : (
-				<span class="text-7xl transition group-hover:scale-110" aria-hidden="true">
+				<span class="text-7xl drop-shadow-sm transition duration-300 group-hover:scale-110" aria-hidden="true">
 					{data.emoji}
 				</span>
 			)
 		}
-		{!data.inStock && <span class="absolute left-3 top-3 rounded-full bg-stone-800 px-2.5 py-1 text-xs font-medium text-white">Out of stock</span>}
+		{!data.inStock && <span class="absolute left-3 top-3 rounded-full bg-stone-800/90 px-2.5 py-1 text-xs font-semibold text-white">Out of stock</span>}
+		{data.inStock && data.madeToOrder && <span class="absolute right-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-bold text-brand-800">🍳 Made to order</span>}
+		{data.inStock && data.featured && <span class="absolute left-3 top-3 rounded-full bg-accent-500 px-2.5 py-1 text-xs font-bold text-brand-950">★ Popular</span>}
 	</div>
-	<div class="flex flex-1 flex-col gap-1 p-4">
-		<span class="text-xs font-medium uppercase tracking-wide text-brand-700">{category.name}</span>
-		<h3 class="font-semibold text-stone-900 group-hover:text-brand-700">{data.name}</h3>
+	<div class="flex flex-1 flex-col gap-1 px-4 pb-4 pt-2">
+		<span class="text-[0.7rem] font-bold uppercase tracking-wider text-leaf-600">{category.name}</span>
+		<h3 class="font-bold text-stone-900 group-hover:text-brand-700">{data.name}</h3>
 		<p class="line-clamp-2 text-sm text-stone-500">{data.summary}</p>
-		<p class="mt-auto pt-2 font-bold text-stone-900">{priceLabel(data.sizes)}</p>
+		<div class="mt-auto flex items-center justify-between gap-2 pt-3">
+			<p class="font-display text-lg font-bold text-brand-800">{priceLabel(data.sizes)}</p>
+			<span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-700 transition group-hover:bg-accent-500 group-hover:text-brand-950" aria-hidden="true">
+				<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+			</span>
+		</div>
 	</div>
 </a>

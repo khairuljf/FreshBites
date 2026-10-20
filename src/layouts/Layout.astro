@@ -1,6 +1,8 @@
 ---
 import '../styles/global.css';
 
+import FacebookIcon from '../components/FacebookIcon.astro';
+import Logo from '../components/Logo.astro';
 import SearchBox from '../components/SearchBox.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import { CATEGORIES, NAV, SITE, waLink } from '../lib/site';
@@ -19,25 +21,47 @@ const year = new Date().getFullYear();
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="theme-color" content="#23571f" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+		/>
 		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
 		<meta property="og:site_name" content={SITE.name} />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={description} />
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta property="og:image" content={new URL(SITE.logo, Astro.url).href} />
+		<meta name="twitter:card" content="summary" />
 		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 	</head>
 	<body class="flex min-h-screen flex-col">
-		<header class="sticky top-0 z-40 border-b border-stone-200 bg-white/90 backdrop-blur">
-			<div class="container-page flex h-16 items-center gap-4">
-				<a href="/" class="flex shrink-0 items-center gap-2 text-xl font-extrabold tracking-tight text-brand-700">
-					<span class="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-lg text-white" aria-hidden="true">🍃</span>
-					{SITE.name}
-				</a>
+		<a href="#main" class="sr-only z-[60] rounded-full bg-brand-700 px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>
 
-				<SearchBox id="search-desktop" class="mx-auto hidden w-full max-w-md md:block" />
+		<div class="bg-brand-800 text-xs text-brand-50">
+			<div class="container-page flex h-9 items-center justify-between gap-4">
+				<p class="truncate">
+					<span class="text-accent-400" aria-hidden="true">●</span> Healthy food &amp; daily essentials · Cash on delivery all over Bangladesh
+				</p>
+				<div class="hidden shrink-0 items-center gap-4 sm:flex">
+					<a href={`tel:${SITE.phoneIntl}`} class="hover:text-accent-400">📞 {SITE.phone}</a>
+					<a href={SITE.facebook} target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-accent-400">
+						<FacebookIcon class="h-3.5 w-3.5" /> Facebook
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<header class="sticky top-0 z-40 border-b border-stone-200/80 bg-white/90 backdrop-blur">
+			<div class="container-page flex h-20 items-center gap-4 md:h-24">
+				<a href="/" class="flex shrink-0 items-center gap-3" aria-label={`${SITE.name} home`}>
+					<Logo class="h-14 w-14 shadow-md shadow-brand-900/10 md:h-20 md:w-20" />
+				</a>
 
 				<nav class="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">
 					{
@@ -45,7 +69,7 @@ const year = new Date().getFullYear();
 							<a
 								href={item.href}
 								class:list={[
-									'rounded-full px-3.5 py-2 text-sm font-medium transition',
+									'whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-semibold transition',
 									isActive(item.href) ? 'bg-brand-50 text-brand-700' : 'text-stone-600 hover:text-brand-700',
 								]}
 								aria-current={isActive(item.href) ? 'page' : undefined}
@@ -58,51 +82,93 @@ const year = new Date().getFullYear();
 
 				<button
 					type="button"
-					class="ml-auto flex h-10 w-10 items-center justify-center rounded-full text-stone-700 hover:bg-stone-100 lg:hidden"
+					class="ml-auto flex h-11 w-11 items-center justify-center rounded-full text-stone-700 transition hover:bg-brand-50 hover:text-brand-700 lg:ml-0"
+					aria-label="Search products"
+					aria-expanded="false"
+					aria-controls="header-search"
+					data-search-toggle
+				>
+					<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+						<circle cx="11" cy="11" r="7"></circle>
+						<path d="m20 20-3.5-3.5"></path>
+					</svg>
+				</button>
+
+				<a
+					href={waLink(`Hello ${SITE.name}, I would like to place an order.`)}
+					target="_blank"
+					rel="noopener"
+					class="btn-accent hidden whitespace-nowrap xl:inline-flex"
+				>
+					<WhatsAppIcon class="h-4 w-4" /> Order now
+				</a>
+
+				<button
+					type="button"
+					class="flex h-11 w-11 items-center justify-center rounded-full text-stone-700 hover:bg-brand-50 lg:hidden"
 					aria-label="Open menu"
 					aria-expanded="false"
 					aria-controls="mobile-menu"
 					data-menu-toggle
 				>
 					<svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-						<path d="M4 7h16M4 12h16M4 17h16"></path>
+						<path d="M4 7h16M4 12h16M4 17h16" data-icon-open></path>
+						<path d="M6 6l12 12M18 6 6 18" class="hidden" data-icon-close></path>
 					</svg>
 				</button>
 			</div>
 
-			<div class="container-page pb-3 md:hidden">
-				<SearchBox id="search-mobile" />
+			<div id="header-search" class="hidden border-t border-stone-200 bg-white">
+				<div class="container-page py-3">
+					<SearchBox id="search-header" class="mx-auto max-w-2xl" />
+				</div>
 			</div>
 
 			<nav id="mobile-menu" class="hidden border-t border-stone-200 bg-white lg:hidden" aria-label="Mobile">
-				<div class="container-page flex flex-col py-2">
+				<div class="container-page flex flex-col gap-1 py-3">
 					{
 						NAV.map(item => (
 							<a
 								href={item.href}
-								class:list={['rounded-lg px-3 py-3 font-medium', isActive(item.href) ? 'bg-brand-50 text-brand-700' : 'text-stone-700']}
+								class:list={['rounded-xl px-3 py-3 font-semibold', isActive(item.href) ? 'bg-brand-50 text-brand-700' : 'text-stone-700 hover:bg-stone-50']}
+								aria-current={isActive(item.href) ? 'page' : undefined}
 							>
 								{item.label}
 							</a>
 						))
 					}
+					<a href={waLink(`Hello ${SITE.name}, I would like to place an order.`)} target="_blank" rel="noopener" class="btn-accent mt-2 py-3">
+						<WhatsAppIcon /> Order on WhatsApp
+					</a>
 				</div>
 			</nav>
 		</header>
 
-		<main class="flex-1">
+		<main id="main" class="flex-1">
 			<slot />
 		</main>
 
-		<footer class="mt-20 bg-brand-900 text-brand-50">
+		<footer class="relative mt-24 overflow-hidden bg-brand-900 text-brand-50">
+			<div class="h-1.5 bg-gradient-to-r from-brand-700 via-leaf-500 to-accent-500" aria-hidden="true"></div>
 			<div class="container-page grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
 				<div>
-					<p class="text-xl font-extrabold">{SITE.name}</p>
-					<p class="mt-3 text-sm text-brand-100/80">{SITE.description}</p>
+					<a href="/" class="inline-flex items-center gap-3">
+						<Logo class="h-16 w-16" />
+						<span class="text-2xl font-extrabold"><span class="text-white">fresh</span><span class="text-accent-400">Bites</span></span>
+					</a>
+					<p class="mt-4 text-sm leading-relaxed text-brand-100/80">{SITE.description}</p>
+					<div class="mt-5 flex gap-2">
+						<a href={SITE.facebook} target="_blank" rel="noopener" aria-label="freshBites on Facebook" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-accent-500 hover:text-brand-950">
+							<FacebookIcon class="h-4 w-4" />
+						</a>
+						<a href={waLink(`Hello ${SITE.name}!`)} target="_blank" rel="noopener" aria-label="freshBites on WhatsApp" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-accent-500 hover:text-brand-950">
+							<WhatsAppIcon class="h-4 w-4" />
+						</a>
+					</div>
 				</div>
 				<div>
-					<p class="font-semibold">Shop</p>
-					<ul class="mt-3 space-y-2 text-sm text-brand-100/80">
+					<p class="font-bold text-accent-400">Shop</p>
+					<ul class="mt-4 space-y-2.5 text-sm text-brand-100/80">
 						{
 							CATEGORIES.map(c => (
 								<li>
@@ -115,8 +181,8 @@ const year = new Date().getFullYear();
 					</ul>
 				</div>
 				<div>
-					<p class="font-semibold">Company</p>
-					<ul class="mt-3 space-y-2 text-sm text-brand-100/80">
+					<p class="font-bold text-accent-400">Company</p>
+					<ul class="mt-4 space-y-2.5 text-sm text-brand-100/80">
 						{
 							NAV.map(item => (
 								<li>
@@ -129,17 +195,23 @@ const year = new Date().getFullYear();
 					</ul>
 				</div>
 				<div>
-					<p class="font-semibold">Contact</p>
-					<ul class="mt-3 space-y-2 text-sm text-brand-100/80">
+					<p class="font-bold text-accent-400">Contact</p>
+					<ul class="mt-4 space-y-2.5 text-sm text-brand-100/80">
 						<li><a href={`tel:${SITE.phoneIntl}`} class="hover:text-white">📞 {SITE.phone}</a></li>
 						<li><a href={waLink(`Hello ${SITE.name}!`)} target="_blank" rel="noopener" class="hover:text-white">💬 WhatsApp</a></li>
+						<li><a href={SITE.facebook} target="_blank" rel="noopener" class="hover:text-white">👍 facebook.com/FreshBitesShop</a></li>
 						<li><a href={`mailto:${SITE.email}`} class="break-all hover:text-white">✉️ {SITE.email}</a></li>
 						<li>📍 {SITE.address}</li>
 						<li>🕗 {SITE.hours}</li>
 					</ul>
 				</div>
 			</div>
-			<div class="border-t border-white/10 py-5 text-center text-xs text-brand-100/70">© {year} {SITE.name}. All rights reserved.</div>
+			<div class="border-t border-white/10">
+				<div class="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-brand-100/70 sm:flex-row">
+					<p>© {year} {SITE.name}. All rights reserved.</p>
+					<p class="font-semibold uppercase tracking-[0.2em] text-leaf-500">{SITE.slogan.join(' • ')}</p>
+				</div>
+			</div>
 		</footer>
 
 		<a
@@ -158,6 +230,17 @@ const year = new Date().getFullYear();
 			toggle?.addEventListener('click', () => {
 				const open = menu?.classList.toggle('hidden') === false;
 				toggle.setAttribute('aria-expanded', String(open));
+				toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+				toggle.querySelector('[data-icon-open]')?.classList.toggle('hidden', open);
+				toggle.querySelector('[data-icon-close]')?.classList.toggle('hidden', !open);
+			});
+
+			const searchToggle = document.querySelector<HTMLButtonElement>('[data-search-toggle]');
+			const searchPanel = document.getElementById('header-search');
+			searchToggle?.addEventListener('click', () => {
+				const open = searchPanel?.classList.toggle('hidden') === false;
+				searchToggle.setAttribute('aria-expanded', String(open));
+				if (open) searchPanel?.querySelector('input')?.focus();
 			});
 		</script>
 	</body>

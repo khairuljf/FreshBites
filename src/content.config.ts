@@ -21,6 +21,8 @@ const products = defineCollection({
 		tags: z.array(z.string()).default([]),
 		featured: z.boolean().default(false),
 		inStock: z.boolean().default(true),
+		// Cooked/baked after the order comes in — shows the SITE.leadTime notice.
+		madeToOrder: z.boolean().default(false),
 	}),
 });
 

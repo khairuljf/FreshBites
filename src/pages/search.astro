@@ -1,14 +1,16 @@
 ---
+import SearchBox from '../components/SearchBox.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Layout from '../layouts/Layout.astro';
 import { SITE, waLink } from '../lib/site';
 ---
 
 <Layout title="Search" description={`Search products at ${SITE.name}.`}>
-	<section class="border-b border-stone-200 bg-brand-50">
+	<section class="border-b border-brand-100 bg-gradient-to-r from-brand-50 to-accent-50">
 		<div class="container-page py-10">
-			<h1 class="text-3xl font-extrabold text-stone-900" data-search-title>Search</h1>
-			<p class="mt-1 text-stone-500" data-search-summary>Type in the search box above to find products.</p>
+			<h1 class="text-3xl font-bold text-brand-900" data-search-title>Search</h1>
+			<p class="mt-1 text-stone-500" data-search-summary>Type below to find products.</p>
+			<SearchBox id="search-page" class="mt-5 max-w-xl" />
 		</div>
 	</section>
 
@@ -49,15 +51,15 @@ import { SITE, waLink } from '../lib/site';
 		grid.innerHTML = results
 			.map(
 				item => `
-				<a href="${escapeHtml(item.url)}" class="group flex flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-0.5 hover:shadow-lg">
-					<div class="flex aspect-square items-center justify-center bg-brand-50 text-7xl">
+				<a href="${escapeHtml(item.url)}" class="group flex flex-col overflow-hidden rounded-3xl border border-stone-200 bg-white transition hover:-translate-y-1 hover:border-brand-200 hover:shadow-xl hover:shadow-brand-900/10">
+					<div class="m-2 flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-brand-50 text-7xl">
 						${item.image ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" class="h-full w-full object-cover" />` : `<span aria-hidden="true">${escapeHtml(item.emoji)}</span>`}
 					</div>
-					<div class="flex flex-1 flex-col gap-1 p-4">
-						<span class="text-xs font-medium uppercase tracking-wide text-brand-700">${escapeHtml(item.category)}</span>
-						<h3 class="font-semibold text-stone-900 group-hover:text-brand-700">${escapeHtml(item.name)}</h3>
+					<div class="flex flex-1 flex-col gap-1 px-4 pb-4 pt-2">
+						<span class="text-[0.7rem] font-bold uppercase tracking-wider text-leaf-600">${escapeHtml(item.category)}</span>
+						<h3 class="font-bold text-stone-900 group-hover:text-brand-700">${escapeHtml(item.name)}</h3>
 						<p class="line-clamp-2 text-sm text-stone-500">${escapeHtml(item.summary)}</p>
-						<p class="mt-auto pt-2 font-bold text-stone-900">${escapeHtml(item.price)}</p>
+						<p class="mt-auto pt-3 font-display text-lg font-bold text-brand-800">${escapeHtml(item.price)}</p>
 					</div>
 				</a>`,
 			)

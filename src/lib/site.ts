@@ -1,9 +1,11 @@
 // Shop details — edit these to update the whole site.
 export const SITE = {
 	name: 'freshBites',
-	tagline: 'Fresh food, delivered to your door',
+	tagline: 'Pure, natural food for your family',
+	slogan: ['Pure', 'Natural', 'Delicious'],
+	logo: '/images/logo.png',
 	description:
-		'freshBites delivers fresh fruits, vegetables, bakery, snacks, dairy and drinks across Bangladesh. Order easily on WhatsApp.',
+		'freshBites brings you pure, natural food — home-made cakes and snacks, plus everyday essentials like atta, oil, fruits and more. Cash on delivery all over Bangladesh — order easily on WhatsApp.',
 	phone: '01758062614',
 	phoneIntl: '+8801758062614',
 	whatsapp: '8801758062614',
@@ -11,6 +13,9 @@ export const SITE = {
 	address: 'Dhaka, Bangladesh',
 	hours: 'Every day, 8:00 AM – 10:00 PM',
 	currency: '৳',
+	// Notice needed for products marked `madeToOrder` (cakes, home-cooked food).
+	leadTime: '24 hours',
+	facebook: 'https://www.facebook.com/FreshBitesShop',
 };
 
 export const NAV = [
@@ -20,18 +25,19 @@ export const NAV = [
 	{ href: '/contact-us', label: 'Contact Us' },
 ];
 
-export const CATEGORY_SLUGS = ['fruits', 'vegetables', 'bakery', 'snacks', 'dairy', 'beverages'] as const;
+export const CATEGORY_SLUGS = ['grocery', 'fruits', 'vegetables', 'bakery', 'snacks', 'dairy', 'beverages'] as const;
 export type TCategorySlug = (typeof CATEGORY_SLUGS)[number];
 
 export type TCategory = { slug: TCategorySlug; name: string; emoji: string; bg: string };
 
 export const CATEGORIES: TCategory[] = [
-	{ slug: 'fruits', name: 'Fruits', emoji: '🍎', bg: 'bg-rose-50' },
-	{ slug: 'vegetables', name: 'Vegetables', emoji: '🥦', bg: 'bg-lime-50' },
-	{ slug: 'bakery', name: 'Bakery', emoji: '🥐', bg: 'bg-amber-50' },
-	{ slug: 'snacks', name: 'Snacks', emoji: '🍪', bg: 'bg-orange-50' },
+	{ slug: 'grocery', name: 'Grocery & Essentials', emoji: '🛒', bg: 'bg-earth-100' },
+	{ slug: 'fruits', name: 'Fruits', emoji: '🍎', bg: 'bg-accent-50' },
+	{ slug: 'vegetables', name: 'Vegetables', emoji: '🥦', bg: 'bg-brand-50' },
+	{ slug: 'bakery', name: 'Bakery', emoji: '🥐', bg: 'bg-earth-50' },
+	{ slug: 'snacks', name: 'Snacks', emoji: '🍪', bg: 'bg-accent-100' },
 	{ slug: 'dairy', name: 'Dairy & Eggs', emoji: '🥛', bg: 'bg-sky-50' },
-	{ slug: 'beverages', name: 'Beverages', emoji: '🧃', bg: 'bg-yellow-50' },
+	{ slug: 'beverages', name: 'Beverages', emoji: '🧃', bg: 'bg-leaf-100' },
 ];
 
 export function getCategory(slug: TCategorySlug): TCategory {

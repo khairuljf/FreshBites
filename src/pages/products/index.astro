@@ -8,11 +8,11 @@ import { CATEGORIES } from '../../lib/site';
 const products = (await getCollection('products')).sort((a, b) => a.data.name.localeCompare(b.data.name));
 ---
 
-<Layout title="All Products" description="Browse fresh fruits, vegetables, bakery, snacks, dairy and beverages from freshBites.">
-	<section class="border-b border-stone-200 bg-brand-50">
+<Layout title="All Products" description="Browse home-made food, grocery essentials, fruits, bakery, snacks and more from freshBites.">
+	<section class="border-b border-brand-100 bg-gradient-to-r from-brand-50 to-accent-50">
 		<div class="container-page py-10">
 			<nav class="text-sm text-stone-500" aria-label="Breadcrumb"><a href="/" class="hover:text-brand-700">Home</a> / Products</nav>
-			<h1 class="mt-2 text-3xl font-extrabold text-stone-900" data-heading>All Products</h1>
+			<h1 class="mt-2 text-3xl font-bold text-brand-900 sm:text-4xl" data-heading>All Products</h1>
 		</div>
 	</section>
 
@@ -30,7 +30,7 @@ const products = (await getCollection('products')).sort((a, b) => a.data.name.lo
 			</div>
 			<label class="flex shrink-0 items-center gap-2 text-sm text-stone-600">
 				Sort
-				<select data-sort class="rounded-full border border-stone-200 bg-white px-3 py-2 text-sm outline-none focus:border-brand-500">
+				<select data-sort class="rounded-full border border-stone-200 bg-white px-3 py-2 text-sm outline-none font-medium focus:border-brand-500 focus:ring-2 focus:ring-brand-100">
 					<option value="name">Name (A–Z)</option>
 					<option value="price-asc">Price: low to high</option>
 					<option value="price-desc">Price: high to low</option>
@@ -52,11 +52,11 @@ const products = (await getCollection('products')).sort((a, b) => a.data.name.lo
 	@reference "../../styles/global.css";
 
 	.filter-chip {
-		@apply shrink-0 cursor-pointer whitespace-nowrap rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition hover:border-brand-500;
+		@apply shrink-0 cursor-pointer whitespace-nowrap rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition hover:border-brand-500 hover:text-brand-700;
 	}
 
 	.filter-chip[aria-pressed='true'] {
-		@apply border-brand-600 bg-brand-600 text-white;
+		@apply border-brand-700 bg-brand-700 text-white shadow-sm;
 	}
 </style>
 
