@@ -1,13 +1,15 @@
 ---
-name: Gomer Ata (Whole Wheat Flour)
-category: grocery
-summary: Pure whole wheat atta for soft, healthy ruti and paratha.
+name: গমের লাল আটা
+category: grains
+summary: খাঁটি লাল আটা, নরম ও স্বাস্থ্যকর রুটি-পরোটার জন্য।
 emoji: 🌾
 sizes:
-  - { label: 1 kg }
-  - { label: 2 kg }
-  - { label: 5 kg }
-tags: [atta, ata, flour, wheat, গমের আটা, আটা, lal ata]
+  - { label: ১ কেজি, price: 90 }
+  - { label: ২ কেজি, price: 180 }
+  - { label: ৩ কেজি, price: 270 }
+  - { label: ৫ কেজি (ডেলিভারি ফ্রি), price: 450 }
+  - { label: ১০ কেজি (ডেলিভারি ফ্রি), price: 800 }
+tags: [atta, ata, lal ata, flour, wheat, whole wheat, গমের আটা, লাল আটা, আটা]
 featured: true
 ---
-Stone-ground whole wheat flour with nothing added. Great for ruti, paratha and baking.
+ভুসিসহ গম ভাঙানো লাল আটা, কোনো কিছু মেশানো নেই। রুটি, পরোটা ও বেকিংয়ের জন্য উপযোগী। ৫ কেজি বা তার বেশি অর্ডারে ডেলিভারি ফ্রি।

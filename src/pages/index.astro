@@ -63,7 +63,7 @@ const orbit = [
 					to your door.
 				</h1>
 				<p class="mt-6 max-w-md text-lg leading-relaxed text-stone-600">
-					Home-made cakes and snacks, everyday essentials like atta and oil, fruits and more — order in seconds on WhatsApp and pay on delivery.
+					Pure honey, home-style pickles, red atta, talbina and traditional sweets — order in seconds on WhatsApp and pay on delivery.
 				</p>
 				<div class="mt-8 flex flex-wrap gap-3">
 					<a href="/products" class="btn-primary px-7 py-3.5 text-base">
@@ -106,7 +106,7 @@ const orbit = [
 			</div>
 			<a href="/products" class="text-sm font-semibold text-brand-700 hover:text-accent-600">View all →</a>
 		</div>
-		<div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
+		<div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
 			{
 				CATEGORIES.map(c => (
 					<a
@@ -117,7 +117,7 @@ const orbit = [
 							{c.emoji}
 						</span>
 						<span class="mt-1 font-bold text-brand-900">{c.name}</span>
-						<span class="text-xs font-medium text-stone-500">{countByCategory(c.slug)} items</span>
+						<span class="text-xs font-medium text-stone-500">{countByCategory(c.slug)} {countByCategory(c.slug) === 1 ? 'item' : 'items'}</span>
 					</a>
 				))
 			}
