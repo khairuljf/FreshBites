@@ -40,6 +40,22 @@ const year = new Date().getFullYear();
 		<meta property="og:image" content={new URL(SITE.logo, Astro.url).href} />
 		<meta name="twitter:card" content="summary" />
 		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+		{
+			// Google Analytics — only on the live site, not in local development.
+			import.meta.env.PROD && (
+				<>
+					<script async src={`https://www.googletagmanager.com/gtag/js?id=${SITE.gaId}`} />
+					<script is:inline define:vars={{ gaId: SITE.gaId }}>
+						window.dataLayer = window.dataLayer || [];
+						function gtag() {
+							dataLayer.push(arguments);
+						}
+						gtag('js', new Date());
+						gtag('config', gaId);
+					</script>
+				</>
+			)
+		}
 	</head>
 	<body class="flex min-h-screen flex-col">
 		<a href="#main" class="sr-only z-[60] rounded-full bg-brand-700 px-4 py-2 text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>

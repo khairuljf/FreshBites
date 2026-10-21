@@ -18,6 +18,8 @@ export const SITE = {
 	facebook: 'https://www.facebook.com/FreshBitesShop',
 	// Microsoft Clarity project (clarity.microsoft.com) — visitor recordings and heatmaps.
 	clarityId: 'z19iv8r9a7',
+	// Google Analytics 4 measurement ID (analytics.google.com → Admin → Data streams).
+	gaId: 'G-FWSDMS21PM',
 };
 
 export const NAV = [
