@@ -12,8 +12,8 @@ const products = defineCollection({
 		name: z.string(),
 		category: z.enum(CATEGORY_SLUGS),
 		summary: z.string(),
-		// Shown when there is no image. Put real photos in public/images/products/ and set `image`.
-		emoji: z.string(),
+		// Main photo, e.g. /images/products/talbina.jpg (file in public/images/products/).
+		// Without one, the shop logo is shown as a placeholder.
 		image: z.string().optional(),
 		// Extra photos, shown as thumbnails on the product page after `image`.
 		gallery: z.array(z.string()).default([]),

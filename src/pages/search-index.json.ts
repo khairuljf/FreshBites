@@ -8,7 +8,6 @@ export async function GET() {
 	const products = await getCollection('products');
 	const index: TSearchItem[] = products.map(p => ({
 		category: getCategory(p.data.category).name,
-		emoji: p.data.emoji,
 		image: p.data.image,
 		name: p.data.name,
 		price: priceLabel(p.data.sizes),

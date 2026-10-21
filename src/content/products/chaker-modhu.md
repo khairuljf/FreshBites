@@ -2,7 +2,6 @@
 name: চাকের মধু
 category: honey
 summary: মৌচাক থেকে সংগ্রহ করা খাঁটি প্রাকৃতিক মধু।
-emoji: 🍯
 sizes:
   - { label: ৫০০ গ্রাম, price: 650 }
   - { label: ১ কেজি, price: 1200 }

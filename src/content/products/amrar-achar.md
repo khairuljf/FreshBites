@@ -2,7 +2,6 @@
 name: আমড়ার আচার (টক + ঝাল + মিষ্টি)
 category: pickles
 summary: টক-ঝাল-মিষ্টি স্বাদের ঘরে তৈরি আমড়ার আচার।
-emoji: 🫙
 sizes:
   - { label: ৫০০ গ্রাম, price: 400 }
   - { label: ১ কেজি, price: 700 }

@@ -55,9 +55,7 @@ const jsonLd = {
 						images.length > 0 ? (
 							<img src={images[0]} alt={data.name} class="h-full w-full object-cover" data-gallery-main />
 						) : (
-							<span class="text-[9rem]" aria-hidden="true">
-								{data.emoji}
-							</span>
+							<img src={SITE.logo} alt="" class="h-1/2 w-1/2 rounded-full opacity-60" />
 						)
 					}
 				</div>

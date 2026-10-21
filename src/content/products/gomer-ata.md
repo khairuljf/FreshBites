@@ -2,7 +2,6 @@
 name: গমের লাল আটা
 category: grains
 summary: খাঁটি লাল আটা, নরম ও স্বাস্থ্যকর রুটি-পরোটার জন্য।
-emoji: 🌾
 sizes:
   - { label: ১ কেজি, price: 90 }
   - { label: ২ কেজি, price: 180 }

@@ -2,7 +2,6 @@
 name: আমের আচার (টক + ঝাল + মিষ্টি)
 category: pickles
 summary: টক, ঝাল আর মিষ্টির মিশেলে ঘরে তৈরি আমের আচার।
-emoji: 🥭
 sizes:
   - { label: ৫০০ গ্রাম, price: 400 }
   - { label: ১ কেজি, price: 700 }

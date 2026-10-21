@@ -2,7 +2,6 @@
 name: আমের আচার (টক + ঝাল) চিনি ছাড়া
 category: pickles
 summary: চিনি ছাড়া তৈরি টক-ঝাল আমের আচার।
-emoji: 🥭
 sizes:
   - { label: ৫০০ গ্রাম, price: 400 }
   - { label: ১ কেজি, price: 700 }

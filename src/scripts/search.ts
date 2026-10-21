@@ -2,7 +2,6 @@ import Fuse from 'fuse.js';
 
 export type TSearchItem = {
 	category: string;
-	emoji: string;
 	image?: string;
 	name: string;
 	price: string;
@@ -47,5 +46,5 @@ export function escapeHtml(value: string): string {
 export function thumbHtml(item: TSearchItem, size: string): string {
 	return item.image
 		? `<img src="${escapeHtml(item.image)}" alt="" class="${size} rounded-lg object-cover" />`
-		: `<span class="${size} flex items-center justify-center rounded-lg bg-brand-50 text-2xl" aria-hidden="true">${escapeHtml(item.emoji)}</span>`;
+		: `<img src="/images/logo-192.png" alt="" class="${size} rounded-lg bg-brand-50 object-contain p-1 opacity-60" />`;
 }
