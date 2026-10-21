@@ -241,6 +241,14 @@ const year = new Date().getFullYear();
 		</a>
 
 		<script>
+			import Clarity from '@microsoft/clarity';
+			import { SITE } from '../lib/site';
+
+			// Only track the live site, not local development.
+			if (import.meta.env.PROD) Clarity.init(SITE.clarityId);
+		</script>
+
+		<script>
 			const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
 			const menu = document.getElementById('mobile-menu');
 			toggle?.addEventListener('click', () => {

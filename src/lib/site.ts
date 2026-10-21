@@ -16,6 +16,8 @@ export const SITE = {
 	// Notice needed for products marked `madeToOrder` (home-cooked food).
 	leadTime: '24 hours',
 	facebook: 'https://www.facebook.com/FreshBitesShop',
+	// Microsoft Clarity project (clarity.microsoft.com) — visitor recordings and heatmaps.
+	clarityId: 'z19iv8r9a7',
 };
 
 export const NAV = [
