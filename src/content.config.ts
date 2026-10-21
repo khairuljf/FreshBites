@@ -15,6 +15,8 @@ const products = defineCollection({
 		// Shown when there is no image. Put real photos in public/images/products/ and set `image`.
 		emoji: z.string(),
 		image: z.string().optional(),
+		// Extra photos, shown as thumbnails on the product page after `image`.
+		gallery: z.array(z.string()).default([]),
 		// Leave `price` out on a size to show "Ask for Price".
 		sizes: z.array(z.object({ label: z.string(), price: z.number().optional() })).min(1),
 		// Extra search words, e.g. Bangla names.
