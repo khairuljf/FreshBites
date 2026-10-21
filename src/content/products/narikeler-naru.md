@@ -2,6 +2,10 @@
 name: নারিকেলের নাড়ু / নারিকেলের লাড্ডু
 category: sweets
 summary: ঘরে তৈরি নারিকেল ও গুড়ের ঐতিহ্যবাহী নাড়ু।
+image: /images/products/narikeler-naru.svg
+gallery:
+  - /images/products/narikeler-naru-2.svg
+  - /images/products/narikeler-naru-3.svg
 sizes:
   - { label: ৫০০ গ্রাম, price: 650 }
   - { label: ১ কেজি, price: 1200 }

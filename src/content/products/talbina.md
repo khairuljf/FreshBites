@@ -2,6 +2,10 @@
 name: তালবিনা / জবের ছাতু
 category: grains
 summary: জব (বার্লি) গুঁড়ো করে তৈরি পুষ্টিকর তালবিনা।
+image: /images/products/talbina.svg
+gallery:
+  - /images/products/talbina-2.svg
+  - /images/products/talbina-3.svg
 sizes:
   - { label: ১ কেজি, price: 260 }
   - { label: ২ কেজি, price: 500 }

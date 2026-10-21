@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
+import Icon from '../../components/Icon.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import WhatsAppIcon from '../../components/WhatsAppIcon.astro';
 import Layout from '../../layouts/Layout.astro';
@@ -127,7 +128,9 @@ const jsonLd = {
 						<WhatsAppIcon />
 						<span data-order-label>{data.sizes[0].price !== undefined && data.inStock ? 'Order on WhatsApp' : 'Ask on WhatsApp'}</span>
 					</a>
-					<a href={`tel:${SITE.phoneIntl}`} class="btn-outline py-3.5 text-base">📞 Call {SITE.phone}</a>
+					<a href={`tel:${SITE.phoneIntl}`} class="btn-outline py-3.5 text-base">
+						<Icon name="phone" class="h-4 w-4" /> Call {SITE.phone}
+					</a>
 				</div>
 				<p class="mt-3 text-xs text-stone-500">{data.madeToOrder && <strong class="text-accent-700">Made fresh to order — please order at least {SITE.leadTime} in advance. </strong>}WhatsApp opens with your order details filled in — just press send. Cash on delivery available.</p>
 

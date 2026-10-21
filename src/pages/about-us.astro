@@ -1,14 +1,18 @@
 ---
+import { getCollection } from 'astro:content';
+
 import FacebookIcon from '../components/FacebookIcon.astro';
 import Logo from '../components/Logo.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Layout from '../layouts/Layout.astro';
-import { SITE, waLink } from '../lib/site';
+import { CATEGORIES, SITE, waLink } from '../lib/site';
+
+const products = await getCollection('products');
 
 const stats = [
-	{ label: 'Happy customers', value: '5,000+' },
-	{ label: 'Fresh products', value: '200+' },
-	{ label: 'Trusted suppliers', value: '30+' },
+	{ label: 'Products', value: String(products.length) },
+	{ label: 'Categories', value: String(CATEGORIES.length) },
+	{ label: 'Delivery', value: 'All BD' },
 	{ label: 'Pure & natural', value: '100%' },
 ];
 

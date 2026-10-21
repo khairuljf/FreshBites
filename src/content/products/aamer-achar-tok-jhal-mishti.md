@@ -2,6 +2,10 @@
 name: আমের আচার (টক + ঝাল + মিষ্টি)
 category: pickles
 summary: টক, ঝাল আর মিষ্টির মিশেলে ঘরে তৈরি আমের আচার।
+image: /images/products/aamer-achar-tok-jhal-mishti.svg
+gallery:
+  - /images/products/aamer-achar-tok-jhal-mishti-2.svg
+  - /images/products/aamer-achar-tok-jhal-mishti-3.svg
 sizes:
   - { label: ৫০০ গ্রাম, price: 400 }
   - { label: ১ কেজি, price: 700 }

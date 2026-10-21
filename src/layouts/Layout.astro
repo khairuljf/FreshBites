@@ -2,6 +2,7 @@
 import '../styles/global.css';
 
 import FacebookIcon from '../components/FacebookIcon.astro';
+import Icon from '../components/Icon.astro';
 import Logo from '../components/Logo.astro';
 import SearchBox from '../components/SearchBox.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
@@ -48,9 +49,12 @@ const year = new Date().getFullYear();
 				<p class="truncate">
 					<span class="text-accent-400" aria-hidden="true">●</span> Healthy food &amp; daily essentials · Cash on delivery all over Bangladesh
 				</p>
-				<div class="hidden shrink-0 items-center gap-4 sm:flex">
-					<a href={`tel:${SITE.phoneIntl}`} class="hover:text-accent-400">📞 {SITE.phone}</a>
-					<a href={SITE.facebook} target="_blank" rel="noopener" class="flex items-center gap-1.5 hover:text-accent-400">
+				<div class="hidden shrink-0 items-center gap-5 sm:flex">
+					<a href={`tel:${SITE.phoneIntl}`} class="flex items-center gap-1.5 font-medium transition hover:text-accent-400">
+						<Icon name="phone" class="h-3.5 w-3.5" /> {SITE.phone}
+					</a>
+					<span class="h-3.5 w-px bg-white/20" aria-hidden="true"></span>
+					<a href={SITE.facebook} target="_blank" rel="noopener" class="flex items-center gap-1.5 font-medium transition hover:text-accent-400">
 						<FacebookIcon class="h-3.5 w-3.5" /> Facebook
 					</a>
 				</div>
@@ -182,13 +186,39 @@ const year = new Date().getFullYear();
 				</div>
 				<div>
 					<p class="font-bold text-accent-400">Contact</p>
-					<ul class="mt-4 space-y-2.5 text-sm text-brand-100/80">
-						<li><a href={`tel:${SITE.phoneIntl}`} class="hover:text-white">📞 {SITE.phone}</a></li>
-						<li><a href={waLink(`Hello ${SITE.name}!`)} target="_blank" rel="noopener" class="hover:text-white">💬 WhatsApp</a></li>
-						<li><a href={SITE.facebook} target="_blank" rel="noopener" class="hover:text-white">👍 facebook.com/FreshBitesShop</a></li>
-						<li><a href={`mailto:${SITE.email}`} class="break-all hover:text-white">✉️ {SITE.email}</a></li>
-						<li>📍 {SITE.address}</li>
-						<li>🕗 {SITE.hours}</li>
+					<ul class="mt-4 space-y-3 text-sm text-brand-100/80">
+						<li>
+							<a href={`tel:${SITE.phoneIntl}`} class="group flex items-center gap-3 hover:text-white">
+								<span class="footer-icon"><Icon name="phone" class="h-4 w-4" /></span>
+								{SITE.phone}
+							</a>
+						</li>
+						<li>
+							<a href={waLink(`Hello ${SITE.name}!`)} target="_blank" rel="noopener" class="group flex items-center gap-3 hover:text-white">
+								<span class="footer-icon"><WhatsAppIcon class="h-4 w-4" /></span>
+								WhatsApp
+							</a>
+						</li>
+						<li>
+							<a href={SITE.facebook} target="_blank" rel="noopener" class="group flex items-center gap-3 hover:text-white">
+								<span class="footer-icon"><FacebookIcon class="h-4 w-4" /></span>
+								Facebook
+							</a>
+						</li>
+						<li>
+							<a href={`mailto:${SITE.email}`} class="group flex items-center gap-3 hover:text-white">
+								<span class="footer-icon"><Icon name="mail" class="h-4 w-4" /></span>
+								<span class="break-all">{SITE.email}</span>
+							</a>
+						</li>
+						<li class="flex items-center gap-3">
+							<span class="footer-icon"><Icon name="map-pin" class="h-4 w-4" /></span>
+							{SITE.address}
+						</li>
+						<li class="flex items-center gap-3">
+							<span class="footer-icon"><Icon name="clock" class="h-4 w-4" /></span>
+							{SITE.hours}
+						</li>
 					</ul>
 				</div>
 			</div>

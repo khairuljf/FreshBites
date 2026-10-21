@@ -1,13 +1,15 @@
 ---
+import FacebookIcon from '../components/FacebookIcon.astro';
+import Icon from '../components/Icon.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Layout from '../layouts/Layout.astro';
 import { SITE, waLink } from '../lib/site';
 
 const channels = [
-	{ href: waLink(`Hello ${SITE.name}!`), icon: '💬', label: 'WhatsApp', value: SITE.phone, external: true },
-	{ href: `tel:${SITE.phoneIntl}`, icon: '📞', label: 'Call us', value: SITE.phone, external: false },
-	{ href: `mailto:${SITE.email}`, icon: '✉️', label: 'Email', value: SITE.email, external: false },
-	{ href: SITE.facebook, icon: '👍', label: 'Facebook', value: 'facebook.com/FreshBitesShop', external: true },
+	{ href: waLink(`Hello ${SITE.name}!`), icon: 'whatsapp', label: 'WhatsApp', value: SITE.phone, external: true, tint: 'bg-whatsapp/15 text-[#128c4b]' },
+	{ href: `tel:${SITE.phoneIntl}`, icon: 'phone', label: 'Call us', value: SITE.phone, external: false, tint: 'bg-brand-50 text-brand-700' },
+	{ href: `mailto:${SITE.email}`, icon: 'mail', label: 'Email', value: SITE.email, external: false, tint: 'bg-accent-50 text-accent-700' },
+	{ href: SITE.facebook, icon: 'facebook', label: 'Facebook', value: 'facebook.com/FreshBitesShop', external: true, tint: 'bg-[#1877f2]/10 text-[#1877f2]' },
 ];
 ---
 
@@ -30,8 +32,14 @@ const channels = [
 						rel={c.external ? 'noopener' : undefined}
 						class="group flex items-center gap-4 rounded-2xl border border-stone-200 bg-white p-5 transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-md"
 					>
-						<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-2xl transition group-hover:bg-accent-100" aria-hidden="true">
-							{c.icon}
+						<span class={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl transition group-hover:scale-105 ${c.tint}`}>
+							{c.icon === 'whatsapp' ? (
+								<WhatsAppIcon class="h-6 w-6" />
+							) : c.icon === 'facebook' ? (
+								<FacebookIcon class="h-6 w-6" />
+							) : (
+								<Icon name={c.icon as 'phone' | 'mail'} class="h-6 w-6" />
+							)}
 						</span>
 						<span class="min-w-0">
 							<span class="block text-sm text-stone-500">{c.label}</span>
@@ -40,9 +48,15 @@ const channels = [
 					</a>
 				))
 			}
-			<div class="rounded-2xl border border-stone-200 bg-white p-5 text-sm text-stone-600">
-				<p><strong class="text-stone-900">📍 Address:</strong> {SITE.address}</p>
-				<p class="mt-2"><strong class="text-stone-900">🕗 Hours:</strong> {SITE.hours}</p>
+			<div class="space-y-3 rounded-2xl border border-stone-200 bg-white p-5 text-sm text-stone-600">
+				<p class="flex items-center gap-3">
+					<Icon name="map-pin" class="h-5 w-5 shrink-0 text-brand-700" />
+					<span><strong class="text-stone-900">Address:</strong> {SITE.address}</span>
+				</p>
+				<p class="flex items-center gap-3">
+					<Icon name="clock" class="h-5 w-5 shrink-0 text-brand-700" />
+					<span><strong class="text-stone-900">Hours:</strong> {SITE.hours}</span>
+				</p>
 			</div>
 		</div>
 

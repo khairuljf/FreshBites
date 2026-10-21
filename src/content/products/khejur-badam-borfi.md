@@ -2,6 +2,10 @@
 name: প্রিমিয়াম খেজুর বাদাম বরফি
 category: sweets
 summary: খেজুর ও বাদাম দিয়ে তৈরি প্রিমিয়াম বরফি।
+image: /images/products/khejur-badam-borfi.svg
+gallery:
+  - /images/products/khejur-badam-borfi-2.svg
+  - /images/products/khejur-badam-borfi-3.svg
 sizes:
   - { label: ২৫০ গ্রাম, price: 400 }
   - { label: ৫০০ গ্রাম, price: 700 }

@@ -2,6 +2,10 @@
 name: চাকের মধু
 category: honey
 summary: মৌচাক থেকে সংগ্রহ করা খাঁটি প্রাকৃতিক মধু।
+image: /images/products/chaker-modhu.svg
+gallery:
+  - /images/products/chaker-modhu-2.svg
+  - /images/products/chaker-modhu-3.svg
 sizes:
   - { label: ৫০০ গ্রাম, price: 650 }
   - { label: ১ কেজি, price: 1200 }
