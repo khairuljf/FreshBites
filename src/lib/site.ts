@@ -9,7 +9,7 @@ export const SITE = {
 	phone: '01758062614',
 	phoneIntl: '+8801758062614',
 	whatsapp: '8801758062614',
-	email: 'khairuljf@gmail.com',
+	email: 'support@fresshbites.shop',
 	address: 'Dhaka, Bangladesh',
 	hours: 'Every day, 8:00 AM – 10:00 PM',
 	currency: '৳',

@@ -2,10 +2,10 @@
 name: আমের আচার (টক + ঝাল)
 category: pickles
 summary: সরিষার তেলে তৈরি টক-ঝাল আমের আচার।
-image: /images/products/aamer-achar-tok-jhal.svg
+image: /images/products/aamer-achar.jpg
 gallery:
-  - /images/products/aamer-achar-tok-jhal-2.svg
-  - /images/products/aamer-achar-tok-jhal-3.svg
+  - /images/products/aamer-achar-2.jpg
+  - /images/products/aamer-achar-3.jpg
 sizes:
   - { label: ৫০০ গ্রাম, price: 400 }
   - { label: ১ কেজি, price: 700 }

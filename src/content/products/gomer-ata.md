@@ -2,10 +2,9 @@
 name: গমের লাল আটা
 category: grains
 summary: খাঁটি লাল আটা, নরম ও স্বাস্থ্যকর রুটি-পরোটার জন্য।
-image: /images/products/gomer-ata.svg
+image: /images/products/gomer-ata.jpg
 gallery:
-  - /images/products/gomer-ata-2.svg
-  - /images/products/gomer-ata-3.svg
+  - /images/products/gomer-ata-2.jpg
 sizes:
   - { label: ১ কেজি, price: 90 }
   - { label: ২ কেজি, price: 180 }
