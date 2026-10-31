@@ -6,6 +6,7 @@ import Icon from '../components/Icon.astro';
 import Logo from '../components/Logo.astro';
 import SearchBox from '../components/SearchBox.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
+import YouTubeIcon from '../components/YouTubeIcon.astro';
 import { CATEGORIES, NAV, SITE, waLink } from '../lib/site';
 
 type Props = { title?: string; description?: string; jsonLd?: object };
@@ -63,16 +64,21 @@ const year = new Date().getFullYear();
 		<div class="bg-brand-800 text-xs text-brand-50">
 			<div class="container-page flex h-9 items-center justify-between gap-4">
 				<p class="truncate">
-					<span class="text-accent-400" aria-hidden="true">●</span> Healthy food &amp; daily essentials · Cash on delivery all over Bangladesh
+					<span class="text-accent-400" aria-hidden="true">●</span> Get healthy food delivered right to your door
 				</p>
 				<div class="hidden shrink-0 items-center gap-5 sm:flex">
 					<a href={`tel:${SITE.phoneIntl}`} class="flex items-center gap-1.5 font-medium transition hover:text-accent-400">
 						<Icon name="phone" class="h-3.5 w-3.5" /> {SITE.phone}
 					</a>
 					<span class="h-3.5 w-px bg-white/20" aria-hidden="true"></span>
-					<a href={SITE.facebook} target="_blank" rel="noopener" class="flex items-center gap-1.5 font-medium transition hover:text-accent-400">
-						<FacebookIcon class="h-3.5 w-3.5" /> Facebook
-					</a>
+					<div class="flex items-center gap-3">
+						<a href={SITE.facebook} target="_blank" rel="noopener" aria-label={`${SITE.name} on Facebook`} class="transition hover:scale-110">
+							<FacebookIcon brand class="h-4 w-4" />
+						</a>
+						<a href={SITE.youtube} target="_blank" rel="noopener" aria-label={`${SITE.name} on YouTube`} class="transition hover:scale-110">
+							<YouTubeIcon brand class="h-5 w-5" />
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
