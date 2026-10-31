@@ -10,5 +10,6 @@ sizes:
   - { label: ২ কেজি, price: 500 }
   - { label: ৫ কেজি, price: 1200 }
 tags: [talbina, barley, jober chatu, chatu, তালবিনা, জব, ছাতু]
+featured: true
 ---
 জব ভেজে মিহি করে গুঁড়ো করা ছাতু। দুধে জ্বাল দিয়ে মধু বা খেজুর মিশিয়ে তালবিনা বানিয়ে খেতে পারেন।
