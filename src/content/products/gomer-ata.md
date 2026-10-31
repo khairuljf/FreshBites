@@ -1,5 +1,6 @@
 ---
 name: গমের লাল আটা
+nameEn: Whole Wheat Red Atta (Lal Atta)
 category: grains
 summary: বাছাইকৃত গম থেকে ভুসিসহ ভাঙানো ১০০% খাঁটি লাল আটা, কোনো কেমিক্যাল বা প্রিজারভেটিভ নেই।
 image: /images/products/gomer-ata.jpg

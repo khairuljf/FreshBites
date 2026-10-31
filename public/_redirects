@@ -1,0 +1,3 @@
+# Permanent redirects for renamed pages (Cloudflare Workers static assets).
+/products/talbina /products/jober-chatu 301
+/products/talbina/ /products/jober-chatu 301

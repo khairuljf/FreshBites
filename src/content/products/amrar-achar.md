@@ -1,5 +1,6 @@
 ---
 name: আমড়ার আচার (টক + ঝাল + মিষ্টি)
+nameEn: Hog Plum Pickle (Amrar Achar)
 category: pickles
 summary: সরিষার তেল, পাঁচফোড়ন আর আখের লাল চিনিতে তৈরি টক-ঝাল-মিষ্টি আমড়ার আচার।
 image: /images/products/amrar-achar.jpg

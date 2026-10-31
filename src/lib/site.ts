@@ -1,7 +1,10 @@
 // Shop details — edit these to update the whole site.
 export const SITE = {
 	name: 'freshBites',
+	url: 'https://fresshbites.shop',
 	tagline: 'Pure, natural food for your family',
+	// Words people type into Google — used in the home page title.
+	seoTitle: 'freshBites — Pure Honey, Achar, Lal Atta & Talbina in Bangladesh',
 	slogan: ['Pure', 'Natural', 'Delicious'],
 	logo: '/images/logo.png',
 	description:
@@ -11,6 +14,8 @@ export const SITE = {
 	whatsapp: '8801758062614',
 	email: 'support@fresshbites.shop',
 	address: 'Dhaka, Bangladesh',
+	city: 'Dhaka',
+	countryCode: 'BD',
 	hours: 'Every day, 8:00 AM – 10:00 PM',
 	currency: '৳',
 	// Notice needed for products marked `madeToOrder` (home-cooked food).

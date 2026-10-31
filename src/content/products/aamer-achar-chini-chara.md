@@ -1,5 +1,6 @@
 ---
 name: আমের আচার (টক + ঝাল) চিনি ছাড়া
+nameEn: Sugar-Free Mango Pickle (Aamer Achar)
 category: pickles
 summary: কাঁচা আম, সরিষার তেল আর দেশি মসলায় তৈরি ১০০% চিনিমুক্ত টক-ঝাল আমের আচার।
 image: /images/products/aamer-achar.jpg

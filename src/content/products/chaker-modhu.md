@@ -1,5 +1,6 @@
 ---
 name: চাকের মধু
+nameEn: Raw Comb Honey (Chaker Modhu)
 category: honey
 summary: প্রাকৃতিক মৌচাক থেকে সরাসরি সংগ্রহ করা ১০০% খাঁটি ও প্রসেসমুক্ত চাকের মধু।
 image: /images/products/chaker-modhu.jpg

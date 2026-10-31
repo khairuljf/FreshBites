@@ -1,5 +1,6 @@
 ---
 name: নারিকেলের নাড়ু / নারিকেলের লাড্ডু
+nameEn: Coconut Naru / Laddu (Narikeler Naru)
 category: sweets
 summary: ঘরে তৈরি নারিকেল ও গুড়ের ঐতিহ্যবাহী নাড়ু।
 image: /images/products/narikeler-naru.svg

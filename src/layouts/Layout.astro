@@ -9,11 +9,60 @@ import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import YouTubeIcon from '../components/YouTubeIcon.astro';
 import { CATEGORIES, NAV, SITE, waLink } from '../lib/site';
 
-type Props = { title?: string; description?: string; jsonLd?: object };
+type Props = {
+	title?: string;
+	description?: string;
+	/** Social-preview image (path or URL). Defaults to the logo. */
+	image?: string;
+	imageAlt?: string;
+	ogType?: 'website' | 'product';
+	/** Keep the page out of Google (search results, 404). */
+	noindex?: boolean;
+	jsonLd?: object | object[];
+};
 
-const { description = SITE.description, jsonLd, title } = Astro.props;
-const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${SITE.tagline}`;
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const { description = SITE.description, image, imageAlt, jsonLd, noindex = false, ogType = 'website', title } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE.name}` : SITE.seoTitle;
+const path = Astro.url.pathname.replace(/(\.html)?\/?$/, '').replace(/\/index$/, '') || '/';
+// One clean URL per page (no trailing slash, no query string) so Google never sees duplicates.
+const canonical = new URL(path, SITE.url).href;
+const ogImage = new URL(image ?? SITE.logo, SITE.url).href;
+const ogImageAlt = imageAlt ?? `${SITE.name} logo`;
+
+// Who we are — shown on every page so Google can build a knowledge panel for the shop.
+const siteJsonLd = [
+	{
+		'@context': 'https://schema.org',
+		'@type': 'OnlineStore',
+		'@id': `${SITE.url}/#organization`,
+		name: SITE.name,
+		url: SITE.url,
+		logo: new URL(SITE.logo, SITE.url).href,
+		image: new URL(SITE.logo, SITE.url).href,
+		description: SITE.description,
+		email: SITE.email,
+		telephone: SITE.phoneIntl,
+		address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.countryCode },
+		areaServed: { '@type': 'Country', name: 'Bangladesh' },
+		contactPoint: { '@type': 'ContactPoint', telephone: SITE.phoneIntl, contactType: 'customer service', availableLanguage: ['Bengali', 'English'] },
+		sameAs: [SITE.facebook, SITE.youtube],
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'WebSite',
+		'@id': `${SITE.url}/#website`,
+		name: SITE.name,
+		url: SITE.url,
+		inLanguage: ['en', 'bn'],
+		publisher: { '@id': `${SITE.url}/#organization` },
+		potentialAction: {
+			'@type': 'SearchAction',
+			target: { '@type': 'EntryPoint', urlTemplate: `${SITE.url}/search?q={search_term_string}` },
+			'query-input': 'required name=search_term_string',
+		},
+	},
+];
+const allJsonLd = [...siteJsonLd, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
 const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 const year = new Date().getFullYear();
 ---
@@ -34,13 +83,27 @@ const year = new Date().getFullYear();
 		/>
 		<title>{pageTitle}</title>
 		<meta name="description" content={description} />
+		<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1'} />
+		{!noindex && <link rel="canonical" href={canonical} />}
+		<link rel="sitemap" href="/sitemap-index.xml" />
+
+		<!-- Social previews (Facebook, WhatsApp, Messenger, X) -->
 		<meta property="og:site_name" content={SITE.name} />
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale:alternate" content="bn_BD" />
+		<meta property="og:url" content={canonical} />
 		<meta property="og:title" content={pageTitle} />
 		<meta property="og:description" content={description} />
-		<meta property="og:image" content={new URL(SITE.logo, Astro.url).href} />
-		<meta name="twitter:card" content="summary" />
-		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:alt" content={ogImageAlt} />
+		<meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+		<meta name="twitter:title" content={pageTitle} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content={ogImageAlt} />
+
+		{allJsonLd.map(data => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
 		{
 			// Google Analytics — only on the live site, not in local development.
 			import.meta.env.PROD && (

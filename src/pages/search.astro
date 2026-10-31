@@ -5,7 +5,7 @@ import Layout from '../layouts/Layout.astro';
 import { SITE, waLink } from '../lib/site';
 ---
 
-<Layout title="Search" description={`Search products at ${SITE.name}.`}>
+<Layout title="Search" description={`Search products at ${SITE.name}.`} noindex>
 	<section class="border-b border-brand-100 bg-gradient-to-r from-brand-50 to-accent-50">
 		<div class="container-page py-10">
 			<h1 class="text-3xl font-bold text-brand-900" data-search-title>Search</h1>

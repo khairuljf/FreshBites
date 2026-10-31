@@ -1,5 +1,6 @@
 ---
 name: তালবিনা / জবের ছাতু
+nameEn: Talbina / Barley Chatu (Jober Chatu)
 category: grains
 summary: বাছাইকৃত দেশি যব হালকা ভেজে ভাঙানো ১০০% খাঁটি ছাতু, কোনো প্রিজারভেটিভ বা চিনি মেশানো নেই।
 image: /images/products/talbina.jpg

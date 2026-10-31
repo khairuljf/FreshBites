@@ -10,6 +10,9 @@ const products = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/products' }),
 	schema: z.object({
 		name: z.string(),
+		// English / romanised name, e.g. "Raw Comb Honey (Chaker Modhu)" — shown under the
+		// Bangla name and added to the Google title so English searches find the product too.
+		nameEn: z.string().optional(),
 		category: z.enum(CATEGORY_SLUGS),
 		summary: z.string(),
 		// Main photo, e.g. /images/products/talbina.jpg (file in public/images/products/).

@@ -23,24 +23,64 @@ const related = products.filter(p => p.data.category === data.category && p.id !
 const startingPrice = getStartingPrice(data.sizes);
 const images = [data.image, ...data.gallery].filter((src): src is string => Boolean(src));
 
-const jsonLd = {
+const url = new URL(`/products/${product.id}`, SITE.url).href;
+const absolute = (src: string) => new URL(src, SITE.url).href;
+const fullName = data.nameEn ? `${data.name} – ${data.nameEn}` : data.name;
+const pricedSizes = data.sizes.filter((s): s is { label: string; price: number } => typeof s.price === 'number');
+
+const seoDescription = [
+	data.summary,
+	data.nameEn && `${data.nameEn}${startingPrice !== undefined ? ` from ${formatPrice(startingPrice)}` : ''}.`,
+	'Cash on delivery all over Bangladesh — order on WhatsApp.',
+]
+	.filter(Boolean)
+	.join(' ');
+
+const productJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'Product',
-	category: category.name,
+	'@id': `${url}#product`,
+	name: fullName,
+	alternateName: data.tags.filter(t => /[a-z]/i.test(t)).slice(0, 5),
 	description: data.summary,
-	name: data.name,
-	...(startingPrice !== undefined && {
-		offers: {
+	url,
+	sku: product.id,
+	category: category.name,
+	image: (images.length ? images : [SITE.logo]).map(absolute),
+	brand: { '@type': 'Brand', name: SITE.name },
+	...(pricedSizes.length > 0 && {
+		offers: pricedSizes.map(size => ({
 			'@type': 'Offer',
-			availability: data.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-			price: startingPrice,
+			name: size.label,
+			url,
+			price: size.price,
 			priceCurrency: 'BDT',
-		},
+			itemCondition: 'https://schema.org/NewCondition',
+			availability: data.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+			seller: { '@id': `${SITE.url}/#organization` },
+		})),
 	}),
+};
+
+const breadcrumbJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+		{ '@type': 'ListItem', position: 2, name: 'Products', item: `${SITE.url}/products` },
+		{ '@type': 'ListItem', position: 3, name: fullName, item: url },
+	],
 };
 ---
 
-<Layout title={data.name} description={data.summary} jsonLd={jsonLd}>
+<Layout
+	title={fullName}
+	description={seoDescription}
+	image={images[0]}
+	imageAlt={fullName}
+	ogType="product"
+	jsonLd={[productJsonLd, breadcrumbJsonLd]}
+>
 	<section class="container-page py-8">
 		<nav class="text-sm text-stone-500" aria-label="Breadcrumb">
 			<a href="/" class="hover:text-brand-700">Home</a> /
@@ -54,7 +94,7 @@ const jsonLd = {
 				<div class={`flex aspect-square items-center justify-center overflow-hidden rounded-[2rem] border border-stone-200 ${category.bg}`}>
 					{
 						images.length > 0 ? (
-							<img src={images[0]} alt={data.name} class="h-full w-full object-cover" data-gallery-main />
+							<img src={images[0]} alt={fullName} width="1200" height="1200" fetchpriority="high" class="h-full w-full object-cover" data-gallery-main />
 						) : (
 							<img src={SITE.logo} alt="" class="h-1/2 w-1/2 rounded-full opacity-60" />
 						)
@@ -71,7 +111,7 @@ const jsonLd = {
 									aria-label={`Show photo ${i + 1} of ${images.length}`}
 									data-gallery-thumb={src}
 								>
-									<img src={src} alt="" loading="lazy" class="h-full w-full object-cover" />
+									<img src={src} alt={`${data.name} – photo ${i + 1}`} width="1200" height="1200" loading="lazy" class="h-full w-full object-cover" />
 								</button>
 							))}
 						</div>
@@ -88,8 +128,9 @@ const jsonLd = {
 				data-in-stock={String(data.inStock)}
 			>
 				<a href={`/products?category=${category.slug}`} class="inline-block rounded-full bg-leaf-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-leaf-600 hover:bg-brand-100">{category.name}</a>
-				<h1 class="mt-3 text-3xl font-bold text-brand-900 sm:text-4xl">{data.name}</h1>
-				<p class="mt-3 text-lg text-stone-600">{data.summary}</p>
+				<h1 class="mt-3 text-3xl font-bold text-brand-900 sm:text-4xl" lang="bn">{data.name}</h1>
+				{data.nameEn && <p class="mt-1 text-base font-semibold text-leaf-600">{data.nameEn}</p>}
+				<p class="mt-3 text-lg text-stone-600" lang="bn">{data.summary}</p>
 
 				<p class="mt-6 font-display text-3xl font-bold text-brand-800" data-price-display aria-live="polite">
 					{data.sizes[0].price !== undefined ? formatPrice(data.sizes[0].price) : 'Ask for Price'}
@@ -136,7 +177,7 @@ const jsonLd = {
 
 				<div class="prose-simple mt-10 rounded-3xl border border-stone-200 bg-white p-6 text-stone-700">
 					<h2 class="mb-3 text-xl font-bold text-brand-900">Details</h2>
-					<Content />
+					<div lang="bn"><Content /></div>
 				</div>
 			</div>
 		</div>
@@ -203,7 +244,10 @@ const jsonLd = {
 	const thumbs = document.querySelectorAll<HTMLButtonElement>('[data-gallery-thumb]');
 	thumbs.forEach(thumb =>
 		thumb.addEventListener('click', () => {
-			if (galleryMain) galleryMain.src = thumb.dataset.galleryThumb!;
+			if (galleryMain) {
+				galleryMain.src = thumb.dataset.galleryThumb!;
+				galleryMain.alt = thumb.querySelector('img')?.alt ?? galleryMain.alt;
+			}
 			thumbs.forEach(t => t.setAttribute('aria-pressed', String(t === thumb)));
 		}),
 	);

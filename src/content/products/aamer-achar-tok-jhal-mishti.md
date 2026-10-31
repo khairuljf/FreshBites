@@ -1,5 +1,6 @@
 ---
 name: আমের আচার (টক + ঝাল + মিষ্টি)
+nameEn: Sweet, Sour & Spicy Mango Pickle (Aamer Achar)
 category: pickles
 summary: সরিষার তেল, পাঁচফোড়ন আর আখের লাল চিনিতে তৈরি টক-ঝাল-মিষ্টি আমের আচার।
 image: /images/products/aamer-achar.jpg

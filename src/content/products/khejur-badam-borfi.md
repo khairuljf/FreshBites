@@ -1,5 +1,6 @@
 ---
 name: প্রিমিয়াম খেজুর বাদাম বরফি
+nameEn: Premium Date & Nut Barfi (Khejur Borfi)
 category: sweets
 summary: চিনি ছাড়া, খাঁটি ঘি আর ১০টি বাদাম ও বীজে তৈরি প্রিমিয়াম খেজুর বরফি।
 image: /images/products/khejur-badam-borfi.jpg

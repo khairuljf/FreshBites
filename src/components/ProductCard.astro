@@ -21,7 +21,7 @@ const category = getCategory(data.category);
 	<div class={`relative m-2 flex aspect-square items-center justify-center overflow-hidden rounded-2xl ${category.bg}`}>
 		{
 			data.image ? (
-				<img src={data.image} alt={data.name} loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
+				<img src={data.image} alt={data.nameEn ? `${data.name} – ${data.nameEn}` : data.name} width="1200" height="1200" loading="lazy" class="h-full w-full object-cover transition duration-300 group-hover:scale-105" />
 			) : (
 				<img src={SITE.logo} alt="" loading="lazy" class="h-1/2 w-1/2 rounded-full opacity-60" />
 			)
@@ -32,7 +32,7 @@ const category = getCategory(data.category);
 	</div>
 	<div class="flex flex-1 flex-col gap-1 px-4 pb-4 pt-2">
 		<span class="text-[0.7rem] font-bold uppercase tracking-wider text-leaf-600">{category.name}</span>
-		<h3 class="font-bold text-stone-900 group-hover:text-brand-700">{data.name}</h3>
+		<h3 class="font-bold text-stone-900 group-hover:text-brand-700" lang="bn">{data.name}</h3>
 		<p class="line-clamp-2 text-sm text-stone-500">{data.summary}</p>
 		<div class="mt-auto flex items-center justify-between gap-2 pt-3">
 			<p class="font-display text-lg font-bold text-brand-800">{priceLabel(data.sizes)}</p>
