@@ -97,6 +97,14 @@ h2 {
 	@apply mb-4 list-disc space-y-1 pl-5;
 }
 
+.prose-simple h3 {
+	@apply mb-2 mt-6 text-lg font-bold text-brand-900 first:mt-0;
+}
+
+.prose-simple strong {
+	@apply font-semibold text-stone-900;
+}
+
 @keyframes wa-pulse {
 	0%,
 	100% {
