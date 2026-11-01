@@ -7,10 +7,10 @@ import Logo from '../components/Logo.astro';
 import ProductCard from '../components/ProductCard.astro';
 import WhatsAppIcon from '../components/WhatsAppIcon.astro';
 import Layout from '../layouts/Layout.astro';
-import { CATEGORIES, SITE, waLink } from '../lib/site';
+import { byOrder, CATEGORIES, SITE, waLink } from '../lib/site';
 
 const products = await getCollection('products');
-const featured = products.filter(p => p.data.featured).slice(0, 8);
+const featured = products.filter(p => p.data.featured).sort(byOrder).slice(0, 8);
 const countByCategory = (slug: string) => products.filter(p => p.data.category === slug).length;
 
 const perks = [

@@ -16,6 +16,7 @@ sizes:
   - { label: ২ কেজি, price: 2500 }
 tags: [borfi, barfi, khejur, dates, badam, nuts, বরফি, খেজুর, বাদাম]
 featured: true
+order: 1
 ---
 ### খেজুর বাদাম বরফি – পুষ্টি ও স্বাদের পারফেক্ট মেলবন্ধন!
 

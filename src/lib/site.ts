@@ -51,6 +51,11 @@ export function getCategory(slug: TCategorySlug): TCategory {
 	return CATEGORIES.find(c => c.slug === slug) ?? CATEGORIES[0];
 }
 
+/** Sort by `order` (lower first), then by name. */
+export function byOrder(a: { data: { order: number; name: string } }, b: { data: { order: number; name: string } }): number {
+	return a.data.order - b.data.order || a.data.name.localeCompare(b.data.name);
+}
+
 export function formatPrice(amount: number): string {
 	return `${SITE.currency}${amount.toLocaleString('en-US')}`;
 }

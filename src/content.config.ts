@@ -25,6 +25,9 @@ const products = defineCollection({
 		// Extra search words, e.g. Bangla names.
 		tags: z.array(z.string()).default([]),
 		featured: z.boolean().default(false),
+		// Display position — lower numbers show first (home favourites and Products page).
+		// Products without one keep alphabetical order after the numbered ones.
+		order: z.number().default(100),
 		inStock: z.boolean().default(true),
 		// Cooked/baked after the order comes in — shows the SITE.leadTime notice.
 		madeToOrder: z.boolean().default(false),
