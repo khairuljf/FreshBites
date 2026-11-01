@@ -152,7 +152,7 @@ const year = new Date().getFullYear();
 					<Logo class="h-14 w-14 shadow-md shadow-brand-900/10 md:h-20 md:w-20" />
 				</a>
 
-				<SearchBox id="search-desktop" class="mx-auto hidden w-full max-w-md md:block" />
+				<SearchBox id="search" class="min-w-0 flex-1 md:mx-auto md:w-full md:max-w-md md:flex-initial" />
 
 				<nav class="ml-auto hidden items-center gap-1 lg:flex" aria-label="Main">
 					{
@@ -193,10 +193,6 @@ const year = new Date().getFullYear();
 						<path d="M6 6l12 12M18 6 6 18" class="hidden" data-icon-close></path>
 					</svg>
 				</button>
-			</div>
-
-			<div class="container-page pb-3 md:hidden">
-				<SearchBox id="search-mobile" />
 			</div>
 
 			<nav id="mobile-menu" class="hidden border-t border-stone-200 bg-white lg:hidden" aria-label="Mobile">
