@@ -14,6 +14,7 @@ sizes:
   - { label: ১০ কেজি (ডেলিভারি ফ্রি), price: 800 }
 tags: [atta, ata, lal ata, flour, wheat, whole wheat, গমের আটা, লাল আটা, আটা]
 featured: true
+order: 2
 ---
 
 ### স্বাস্থ্যকর জীবনযাপনের সেরা সঙ্গী: ১০০% খাঁটি ও তাজা গমের লাল আটা

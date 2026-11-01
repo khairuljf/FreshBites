@@ -11,6 +11,7 @@ sizes:
   - { label: ১ কেজি, price: 1200 }
 tags: [honey, modhu, chaker modhu, মধু, চাকের মধু]
 featured: true
+order: 3
 ---
 ### প্রকৃতির কোল থেকে সরাসরি আপনার টেবিলে: ১০০% খাঁটি চাকের মধু
 

@@ -12,6 +12,7 @@ sizes:
   - { label: ৫ কেজি, price: 1200 }
 tags: [talbina, barley, jober chatu, chatu, তালবিনা, জব, ছাতু]
 featured: true
+order: 4
 ---
 
 ### প্রাকৃতিক শক্তির উৎস: ১০০% খাঁটি ও তাজা যবের ছাতু
